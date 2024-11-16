@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\css\\app.css"
     },
     {
+      "Id": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
       "Id": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "PackagePath": "staticwebassets\\css\\open-iconic"
     },

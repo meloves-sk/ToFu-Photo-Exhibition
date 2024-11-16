@@ -1,6 +1,4 @@
-﻿using Data;
-
-namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
 {
     public class CategoryService : ICategoryService
 	{

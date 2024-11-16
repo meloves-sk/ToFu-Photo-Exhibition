@@ -839,3 +839,4 @@ C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Client\o
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Client\obj\Debug\net7.0\scopedcss\projectbundle\ToFu_Photo_Exhibition.Client.bundle.scp.css
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Client\bin\Debug\net7.0\wwwroot\tpe_black.jpeg
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Client\bin\Debug\net7.0\wwwroot\x-icon.jpg
+C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Client\obj\Debug\net7.0\ToFu Photo Exhibition.Client.sourcelink.json

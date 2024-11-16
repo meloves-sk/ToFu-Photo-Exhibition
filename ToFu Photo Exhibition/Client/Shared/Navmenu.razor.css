@@ -1,13 +1,10 @@
 ﻿.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
-    height:50px;
-}
-
-.top-row{
+    height: 50px;
 }
 
 .cubic {
-    width:100%;
+    width: 100%;
     display: block;
     transform-style: preserve-3d;
     perspective: 300px;
@@ -24,8 +21,8 @@
         border-radius: 10px;
     }
 
-#img-xicon{
-    display:none;
+#img-xicon {
+    display: none;
 }
 
 .oi {
@@ -67,56 +64,57 @@
 
 @media (min-width: 641px) {
     .cubic {
-        width:120px;
-        height:100px;
+        width: 120px;
+        height: 100px;
     }
 
     #img-xicon {
         display: block;
     }
 
-        .cubic .img-cubic {
-            width: 100px;
-            position: absolute;
-            border: 1px solid black;
-            transition: all 1.5s;
-        }
+    .cubic .img-cubic {
+        width: 100px;
+        position: absolute;
+        border: 1px solid black;
+        transition: all 1.5s;
+    }
 
-        .cubic #img-logo {
-            transform: rotateX(0);
-        }
+    .cubic #img-logo {
+        transform: rotateX(0);
+    }
 
-        .cubic #img-xicon {
-            transform: rotateX(90deg);
+    .cubic #img-xicon {
+        transform: rotateX(90deg);
+        transform-origin: center center -50px;
+    }
+
+    .cubic:hover {
+        #img-logo{
+            transform: rotateX(-90deg);
             transform-origin: center center -50px;
         }
 
-        .cubic:hover {
-            #img-logo {
-                transform: rotateX(-90deg);
-                transform-origin: center center -50px;
+        #img-xicon {
+            transform: rotateX(0);
+            transform-origin: center center -50px;
         }
-
-            #img-xicon {
-                transform: rotateX(0);
-                transform-origin: center center -50px;
-            }
-        }       
-
-    .navbar-toggler {
-        display: none;
     }
 
-    .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
-    }
+.navbar-toggler {
+    display: none;
+}
 
-    .nav-scrollable {
-        /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
-        overflow-y: auto;
-    }
+.collapse {
+    /* Never collapse the sidebar for wide screens */
+    display: block;
+}
+
+.nav-scrollable {
+    /* Allow sidebar to scroll for tall menus */
+    height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+}
+
 }
 
 body {

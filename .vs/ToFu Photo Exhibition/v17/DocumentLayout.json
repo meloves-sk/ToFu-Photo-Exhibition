@@ -1,88 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|c:\\users\\shoma\\source\\repos\\tofu photo exhibition\\tofu photo exhibition\\client\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|solutionrelative:tofu photo exhibition\\client\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|c:\\users\\shoma\\source\\repos\\tofu photo exhibition\\tofu photo exhibition\\client\\shared\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|solutionrelative:tofu photo exhibition\\client\\shared\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|c:\\users\\shoma\\source\\repos\\tofu photo exhibition\\tofu photo exhibition\\client\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|solutionrelative:tofu photo exhibition\\client\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|c:\\users\\shoma\\source\\repos\\tofu photo exhibition\\tofu photo exhibition\\client\\shared\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{657BBE0A-92A2-4290-BF43-8D9FFFC991BD}|ToFu Photo Exhibition\\Client\\ToFu Photo Exhibition.Client.csproj|solutionrelative:tofu photo exhibition\\client\\shared\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedHeight": 279,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.razor",
-              "DocumentMoniker": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Pages\\Index.razor",
-              "RelativeDocumentMoniker": "ToFu Photo Exhibition\\Client\\Pages\\Index.razor",
-              "ToolTip": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Pages\\Index.razor",
-              "RelativeToolTip": "ToFu Photo Exhibition\\Client\\Pages\\Index.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-16T07:00:03.546Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Navmenu.razor.css",
-              "DocumentMoniker": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\Navmenu.razor.css",
-              "RelativeDocumentMoniker": "ToFu Photo Exhibition\\Client\\Shared\\Navmenu.razor.css",
-              "ToolTip": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\Navmenu.razor.css",
-              "RelativeToolTip": "ToFu Photo Exhibition\\Client\\Shared\\Navmenu.razor.css",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-11-16T06:57:17.828Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainLayout.razor.css",
-              "DocumentMoniker": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor.css",
-              "RelativeDocumentMoniker": "ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor.css",
-              "ToolTip": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor.css",
-              "RelativeToolTip": "ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor.css",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAACwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-11-16T06:54:44.922Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor",
-              "RelativeDocumentMoniker": "ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\shoma\\source\\repos\\ToFu Photo Exhibition\\ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor",
-              "RelativeToolTip": "ToFu Photo Exhibition\\Client\\Shared\\MainLayout.razor",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwgAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-16T06:54:32.905Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

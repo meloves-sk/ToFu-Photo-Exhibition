@@ -69,3 +69,4 @@ C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Server\o
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Server\bin\Debug\net7.0\wwwroot\Images\supergt_no16_image1.jpg
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Server\bin\Debug\net7.0\wwwroot\tpe_black.jpeg
 C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Server\bin\Debug\net7.0\wwwroot\x-icon.jpg
+C:\Users\shoma\source\repos\ToFu Photo Exhibition\ToFu Photo Exhibition\Server\obj\Debug\net7.0\ToFu Photo Exhibition.Server.sourcelink.json
