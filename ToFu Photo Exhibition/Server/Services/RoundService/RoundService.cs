@@ -7,9 +7,12 @@
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Round>>> GetRoundsAsync()
+		public async Task<ServiceResponse<List<Round>>> GetRoundsAsync(int categoryId)
 		{
-			List<Round> rounds = await _db.Rounds.ToListAsync();
+			List<Round> rounds = new List<Round>();
+			rounds.Add(new Round { Id = 0, Name = "すべて" });
+			List<Round> getRounds = await _db.Rounds.ToListAsync();
+			rounds.AddRange(getRounds.Where(a => a.CategoryId == categoryId));
 			ServiceResponse<List<Round>> response = new ServiceResponse<List<Round>>
 			{
 				Data = rounds,

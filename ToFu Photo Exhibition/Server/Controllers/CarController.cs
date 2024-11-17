@@ -10,9 +10,9 @@
 			_carService = carService;
 		}
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Car>>>> GetCar()
+		public async Task<ActionResult<ServiceResponse<List<Car>>>> GetCar(int categoryId,int manufacturerId,int teamId)
 		{
-			var response = await _carService.GetCarAsync();
+			var response = await _carService.GetCarAsync(categoryId,manufacturerId,teamId);
 			return Ok(response);
 		}
 	}

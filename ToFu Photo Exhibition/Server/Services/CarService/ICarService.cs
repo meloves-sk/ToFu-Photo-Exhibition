@@ -2,6 +2,6 @@
 {
 	public interface ICarService
 	{
-		Task<ServiceResponse<List<Car>>> GetCarAsync();
+		Task<ServiceResponse<List<Car>>> GetCarAsync(int categoryId, int manufacturerId, int teamId);
 	}
 }

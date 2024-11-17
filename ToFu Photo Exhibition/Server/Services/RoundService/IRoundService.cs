@@ -2,6 +2,6 @@
 {
 	public interface IRoundService
 	{
-		Task<ServiceResponse<List<Round>>> GetRoundsAsync();
+		Task<ServiceResponse<List<Round>>> GetRoundsAsync(int categoryId);
 	}
 }

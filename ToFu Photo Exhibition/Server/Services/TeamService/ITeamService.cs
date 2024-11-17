@@ -2,6 +2,6 @@
 {
 	public interface ITeamService
 	{
-		Task<ServiceResponse<List<Team>>> GetTeamsAsync();
+		Task<ServiceResponse<List<Team>>> GetTeamsAsync(int categoryId,int manufacturerId);
 	}
 }

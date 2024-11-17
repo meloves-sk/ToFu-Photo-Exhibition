@@ -11,9 +11,9 @@
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Manufacturer>>>> GetManufacturer()
+		public async Task<ActionResult<ServiceResponse<List<Manufacturer>>>> GetManufacturer(int categoryId)
 		{
-			var result = await _manufacturerService.GetManufacturersAsync();
+			var result = await _manufacturerService.GetManufacturersAsync(categoryId);
 			return Ok(result);
 		}
 	}

@@ -11,9 +11,9 @@
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Team>>>> GetTeam()
+		public async Task<ActionResult<ServiceResponse<List<Team>>>> GetTeam(int categoryId, int manufacturerId)
 		{
-			var result = await _teamService.GetTeamsAsync();
+			var result = await _teamService.GetTeamsAsync(categoryId, manufacturerId);
 			return Ok(result);
 		}
 	}

@@ -2,6 +2,6 @@
 {
 	public interface IManufacturerService
 	{
-		Task<ServiceResponse<List<Manufacturer>>> GetManufacturersAsync();
+		Task<ServiceResponse<List<Manufacturer>>> GetManufacturersAsync(int categoryId);
 	}
 }

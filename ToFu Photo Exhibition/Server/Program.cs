@@ -7,15 +7,15 @@ global using ToFu_Photo_Exhibition.Server.Services.RoundService;
 global using ToFu_Photo_Exhibition.Server.Services.CarService;
 global using ToFu_Photo_Exhibition.Shared.Models;
 global using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<DB>(a => a.UseMySql(builder.Configuration.GetConnectionString("DB"), new MariaDbServerVersion(new Version(10, 11, 6))));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers().AddJsonOptions(a => a.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
+builder.Services.AddDbContext<DB>(a => a.UseMySql(builder.Configuration.GetConnectionString("DB"), new MariaDbServerVersion(new Version(10, 11, 6))));
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
