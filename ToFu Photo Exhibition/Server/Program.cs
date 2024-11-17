@@ -6,9 +6,7 @@ global using ToFu_Photo_Exhibition.Server.Services.TeamService;
 global using ToFu_Photo_Exhibition.Server.Services.RoundService;
 global using ToFu_Photo_Exhibition.Server.Services.CarService;
 global using ToFu_Photo_Exhibition.Shared.Models;
-global using Data;
 global using Microsoft.AspNetCore.Mvc;
-using Data;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);

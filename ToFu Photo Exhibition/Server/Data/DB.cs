@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace Data;
-
-public partial class DB : DbContext
+﻿public partial class DB : DbContext
 {
     public DB()
     {
@@ -27,6 +21,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<Team> Teams { get; set; }
 
+    public virtual DbSet<TeamInformation> TeamInformations { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseMySql("name=ConnectionStrings:DB", ServerVersion.Parse("10.11.6-mariadb"));
 
@@ -40,21 +36,21 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.TeamId, "Car_Team");
+            entity.HasIndex(e => e.TeamInformationId, "Car_TeamInformation_idx");
 
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
                 .HasColumnName("ID");
             entity.Property(e => e.CarNo).HasColumnType("int(11)");
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.TeamId)
+            entity.Property(e => e.TeamInformationId)
                 .HasColumnType("int(11)")
-                .HasColumnName("TeamID");
+                .HasColumnName("TeamInformationID");
 
-            entity.HasOne(d => d.Team).WithMany(p => p.Cars)
-                .HasForeignKey(d => d.TeamId)
+            entity.HasOne(d => d.TeamInformation).WithMany(p => p.Cars)
+                .HasForeignKey(d => d.TeamInformationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Car_Team");
+                .HasConstraintName("Car_TeamInformation");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -133,9 +129,21 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.CategoryId, "Team_Category_idx");
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(100);
+        });
 
-            entity.HasIndex(e => e.ManufacturerId, "Team_Manufacturer_idx");
+        modelBuilder.Entity<TeamInformation>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.HasIndex(e => e.CategoryId, "TeamInformation_Category_idx");
+
+            entity.HasIndex(e => e.ManufacturerId, "TeamInformation_Manufacturer_idx");
+
+            entity.HasIndex(e => e.TeamId, "TeamInformation_Teams_idx");
 
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
@@ -146,17 +154,24 @@ public partial class DB : DbContext
             entity.Property(e => e.ManufacturerId)
                 .HasColumnType("int(11)")
                 .HasColumnName("ManufacturerID");
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.TeamId)
+                .HasColumnType("int(11)")
+                .HasColumnName("TeamID");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.Teams)
+            entity.HasOne(d => d.Category).WithMany(p => p.TeamInformations)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Team_Category");
+                .HasConstraintName("TeamInformation_Category");
 
-            entity.HasOne(d => d.Manufacturer).WithMany(p => p.Teams)
+            entity.HasOne(d => d.Manufacturer).WithMany(p => p.TeamInformations)
                 .HasForeignKey(d => d.ManufacturerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Team_Manufacturer");
+                .HasConstraintName("TeamInformation_Manufacturer");
+
+            entity.HasOne(d => d.Team).WithMany(p => p.TeamInformations)
+                .HasForeignKey(d => d.TeamId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("TeamInformation_Teams");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ToFu_Photo_Exhibition.Shared.Models;
+﻿namespace ToFu_Photo_Exhibition.Shared.Models;
 
 public partial class Round
 {

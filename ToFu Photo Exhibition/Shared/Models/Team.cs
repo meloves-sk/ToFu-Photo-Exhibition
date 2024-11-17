@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ToFu_Photo_Exhibition.Shared.Models;
+﻿namespace ToFu_Photo_Exhibition.Shared.Models;
 
 public partial class Team
 {
@@ -9,13 +6,5 @@ public partial class Team
 
     public string Name { get; set; } = null!;
 
-    public int ManufacturerId { get; set; }
-
-    public int CategoryId { get; set; }
-
-    public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
-
-    public virtual Category Category { get; set; } = null!;
-
-    public virtual Manufacturer Manufacturer { get; set; } = null!;
+    public virtual ICollection<TeamInformation> TeamInformations { get; set; } = new List<TeamInformation>();
 }

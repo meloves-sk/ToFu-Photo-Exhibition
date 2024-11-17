@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ToFu_Photo_Exhibition.Shared.Models;
-
+﻿namespace ToFu_Photo_Exhibition.Shared.Models;
 public partial class Car
 {
     public int Id { get; set; }
@@ -11,9 +7,9 @@ public partial class Car
 
     public int CarNo { get; set; }
 
-    public int TeamId { get; set; }
+    public int TeamInformationId { get; set; }
 
     public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
 
-    public virtual Team Team { get; set; } = null!;
+    public virtual TeamInformation TeamInformation { get; set; } = null!;
 }

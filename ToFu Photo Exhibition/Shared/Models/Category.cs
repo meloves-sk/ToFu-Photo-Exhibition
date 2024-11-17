@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ToFu_Photo_Exhibition.Shared.Models;
+﻿namespace ToFu_Photo_Exhibition.Shared.Models;
 
 public partial class Category
 {
@@ -11,5 +8,5 @@ public partial class Category
 
     public virtual ICollection<Round> Rounds { get; set; } = new List<Round>();
 
-    public virtual ICollection<Team> Teams { get; set; } = new List<Team>();
+    public virtual ICollection<TeamInformation> TeamInformations { get; set; } = new List<TeamInformation>();
 }
