@@ -10,7 +10,7 @@
 			_teamService = teamService;
 		}
 
-		[HttpGet]
+		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}")]
 		public async Task<ActionResult<ServiceResponse<List<Team>>>> GetTeam(int categoryId, int manufacturerId)
 		{
 			var result = await _teamService.GetTeamsAsync(categoryId, manufacturerId);

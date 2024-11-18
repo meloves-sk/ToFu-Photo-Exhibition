@@ -10,7 +10,7 @@
 			_manufacturerService = manufacturerService;
 		}
 
-		[HttpGet]
+		[HttpGet("category/{categoryId}")]
 		public async Task<ActionResult<ServiceResponse<List<Manufacturer>>>> GetManufacturer(int categoryId)
 		{
 			var result = await _manufacturerService.GetManufacturersAsync(categoryId);

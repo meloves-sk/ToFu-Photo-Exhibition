@@ -1,5 +1,5 @@
-﻿@inject ICategoryService categoryService;
-@if (categoryService.Categories == null || categoryService.Categories.Count() == 0)
+﻿@inject ICategoryService CategoryService;
+@if (CategoryService.Categories == null || CategoryService.Categories.Count() == 0)
 {
 	<span>Loading now...</span>
 }
@@ -29,7 +29,7 @@ else
 					<span class="oi" aria-hidden="true">Home</span>
 				</NavLink>
 			</div>
-			@foreach (var category in categoryService.Categories)
+			@foreach (var category in CategoryService.Categories)
 			{
 				<div class="nav-item px-3">
 					<NavLink class="nav-link" href="">
@@ -53,6 +53,6 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-		await categoryService.GetCategories();
+		await CategoryService.GetCategories();
 	}
 }

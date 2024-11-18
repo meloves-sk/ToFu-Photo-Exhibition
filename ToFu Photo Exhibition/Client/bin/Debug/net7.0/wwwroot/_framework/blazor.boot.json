@@ -1,7 +1,7 @@
 {
   "entryAssembly": "ToFu_Photo_Exhibition.Client",
   "resources": {
-    "hash": "sha256-Q/IuYpPyzYW+UY6tHAXH4tCqqdsLCvm+8o5uLpQX+ns=",
+    "hash": "sha256-fUvMnSxJMp8cKfxM+KF/EOPVbvRWz/iGmKPVelfK6Nw=",
     "runtime": {
       "dotnet.7.0.20.akfnhtabfv.js": "sha256-eaJTmow4t8eE7FZMZR5Ja41JMOefGCbIYDTdpclGsac=",
       "dotnet.timezones.blat": "sha256-gbATD5HDsHYtW8vdPYh9iSBY4O5CjvMeCSF5xXWF1xo=",
@@ -203,12 +203,12 @@
       "mscorlib.dll": "sha256-HYyp9hO+GKFyupcEiY1PxtBBXbHzefsO3Q8RiQTaNCA=",
       "netstandard.dll": "sha256-N5CcC3sLzGBesbmeJAp5bwxABN9u7SwkIO5qfFjzoik=",
       "System.Private.CoreLib.dll": "sha256-bJS1DJmhjP7PvegYG+Z8O9EDtRY78HKinA3LUMVLlSQ=",
-      "ToFu Photo Exhibition.Shared.dll": "sha256-1zqryLeyTBlc0dh0O3+VA9VJKQPOmbdPhkzXt2OJToA=",
-      "ToFu_Photo_Exhibition.Client.dll": "sha256-Zy5EgudTkX7yts0X4LIR0jc/b4VYXHJSKk0woZd2APQ="
+      "ToFu Photo Exhibition.Shared.dll": "sha256-Yh/xGRbGqyM6/dU1kDcfy+Nw2f9WJDDnlRDR/nwiQUQ=",
+      "ToFu_Photo_Exhibition.Client.dll": "sha256-ACWpznB71Tuh4LVBXv7qTLLCiNvlKjUFEM89DlT9Hpw="
     },
     "pdb": {
-      "ToFu Photo Exhibition.Shared.pdb": "sha256-iXRVOpFGD2NU7Z+voU82Qa38GfcK3opx+aRr8RI+dXA=",
-      "ToFu_Photo_Exhibition.Client.pdb": "sha256-sMEB+gfrLcjS8zXYnUgh+QdjpSVB5aAoe262P6jzs1A="
+      "ToFu Photo Exhibition.Shared.pdb": "sha256-+MzMac1bX9jA7DbLUxBGXiS0/ph+dV7NwQOlM4A1K88=",
+      "ToFu_Photo_Exhibition.Client.pdb": "sha256-mRMtoX2M6eadEoi1HFpkXQ1UiPnFbfnfmVovGoSLxvE="
     },
     "runtimeAssets": {
       "dotnet.wasm": {

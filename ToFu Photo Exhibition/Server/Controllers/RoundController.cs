@@ -9,7 +9,7 @@
 		{
 			_roundService = roundService;
 		}
-		[HttpGet]
+		[HttpGet("category/{categoryId}")]
 		public async Task<ActionResult<ServiceResponse<List<Round>>>> GetRound(int categoryId)
 		{
 			var response = await _roundService.GetRoundsAsync(categoryId);

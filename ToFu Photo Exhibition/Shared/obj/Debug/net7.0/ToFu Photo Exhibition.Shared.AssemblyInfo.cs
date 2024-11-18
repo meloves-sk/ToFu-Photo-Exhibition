@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ToFu Photo Exhibition.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79f39e5e319d8005917eb8043b22118adfd6c1a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbf815b6e2fd09b0305875bb2f3bf14e63c5236d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ToFu Photo Exhibition.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ToFu Photo Exhibition.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

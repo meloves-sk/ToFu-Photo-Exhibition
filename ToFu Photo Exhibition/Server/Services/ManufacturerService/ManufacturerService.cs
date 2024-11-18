@@ -11,8 +11,7 @@
 		{
 			List<Manufacturer> manufacturers = new List<Manufacturer>();
 			manufacturers.Add(new Manufacturer { Id = 0, Name = "すべて" });
-			var getManufacturers = await _db.Manufacturers.Include(a => a.TeamInformations).ToListAsync();
-			manufacturers.AddRange(getManufacturers.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)));
+			manufacturers.AddRange(await _db.Manufacturers.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync());
 			ServiceResponse<List<Manufacturer>> response = new ServiceResponse<List<Manufacturer>>
 			{
 				Data = manufacturers,

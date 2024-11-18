@@ -12,8 +12,7 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 		{
 			List<Car> cars = new List<Car>();
 			cars.Add(new Car { Id = 0, Name = "すべて" });
-			List<Car> getCars = await _db.Cars.Include(a => a.TeamInformation).ToListAsync();
-			cars.AddRange(Filter(getCars.Where(a => a.TeamInformation.CategoryId == categoryId).ToList(), manufacturerId, teamId));
+			cars.AddRange(Filter(await _db.Cars.Include(a => a.TeamInformation).Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId));
 			ServiceResponse<List<Car>> response = new ServiceResponse<List<Car>>
 			{
 				Data = cars,

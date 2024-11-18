@@ -11,8 +11,7 @@
 		{
 			List<Team> teams = new List<Team>();
 			teams.Add(new Team { Id = 0, Name = "すべて" });
-			List<Team> getTeams = await _db.Teams.Include(a => a.TeamInformations).ToListAsync();
-			teams.AddRange(Filter(getTeams.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToList(), manufacturerId));
+			teams.AddRange(Filter(await _db.Teams.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync(), manufacturerId));
 			ServiceResponse<List<Team>> response = new ServiceResponse<List<Team>>
 			{
 				Data = teams,

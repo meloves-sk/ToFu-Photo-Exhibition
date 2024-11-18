@@ -7,6 +7,7 @@ global using ToFu_Photo_Exhibition.Server.Services.RoundService;
 global using ToFu_Photo_Exhibition.Server.Services.CarService;
 global using ToFu_Photo_Exhibition.Shared.Models;
 global using Microsoft.AspNetCore.Mvc;
+using ToFu_Photo_Exhibition.Server.Services.PhotoService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IRoundService, RoundService>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 var app = builder.Build();
 app.UseSwaggerUI();
 // Configure the HTTP request pipeline.

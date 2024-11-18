@@ -11,8 +11,7 @@
 		{
 			List<Round> rounds = new List<Round>();
 			rounds.Add(new Round { Id = 0, Name = "すべて" });
-			List<Round> getRounds = await _db.Rounds.ToListAsync();
-			rounds.AddRange(getRounds.Where(a => a.CategoryId == categoryId));
+			rounds.AddRange(await _db.Rounds.Where(a => a.CategoryId == categoryId).ToListAsync());
 			ServiceResponse<List<Round>> response = new ServiceResponse<List<Round>>
 			{
 				Data = rounds,
