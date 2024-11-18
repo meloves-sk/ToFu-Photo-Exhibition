@@ -16,5 +16,17 @@
 			var result = await _teamService.GetTeamsAsync(categoryId, manufacturerId);
 			return Ok(result);
 		}
+		[HttpPost]
+		public async Task<ActionResult> RegisterTeam([FromBody] Team team)
+		{
+			await _teamService.SaveTeam(team);
+			return Ok();
+		}
+		[HttpPut]
+		public async Task<ActionResult> UpdateTeam([FromBody] Team team)
+		{
+			await _teamService.SaveTeam(team);
+			return Ok();
+		}
 	}
 }

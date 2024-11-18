@@ -16,5 +16,19 @@
 			var result = await _manufacturerService.GetManufacturersAsync(categoryId);
 			return Ok(result);
 		}
+
+		[HttpPost]
+		public async Task<ActionResult> RegisterManufacturer([FromBody] Manufacturer manufacturer)
+		{
+			await _manufacturerService.SaveManufacturer(manufacturer);
+			return Ok();
+		}
+
+		[HttpPut]
+		public async Task<ActionResult> UpdateManufacturer([FromBody] Manufacturer manufacturer)
+		{
+			await _manufacturerService.SaveManufacturer(manufacturer);
+			return Ok();
+		}
 	}
 }

@@ -6,8 +6,6 @@ public partial class Round
 
     public string Name { get; set; } = null!;
 
-    public int Year { get; set; }
-
     public int CategoryId { get; set; }
 
     public virtual Category Category { get; set; } = null!;

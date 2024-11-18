@@ -15,5 +15,17 @@
 			var response = await _roundService.GetRoundsAsync(categoryId);
 			return Ok(response);
 		}
+		[HttpPost]
+		public async Task<ActionResult> RegisterRound([FromBody] Round round)
+		{
+			await _roundService.SaveRound(round);
+			return Ok();
+		}
+		[HttpPut]
+		public async Task<ActionResult> UpdateRound([FromBody] Round round)
+		{
+			await _roundService.SaveRound(round);
+			return Ok();
+		}
 	}
 }

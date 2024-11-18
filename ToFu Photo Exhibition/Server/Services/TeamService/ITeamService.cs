@@ -3,5 +3,6 @@
 	public interface ITeamService
 	{
 		Task<ServiceResponse<List<Team>>> GetTeamsAsync(int categoryId,int manufacturerId);
+		Task SaveTeam(Team team);
 	}
 }

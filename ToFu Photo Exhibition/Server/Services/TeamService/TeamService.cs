@@ -21,6 +21,14 @@
 			return response;
 		}
 
+		public async Task SaveTeam(Team team)
+		{
+			Team _team = await _db.Teams.FindAsync(team.Id) ?? new Team();
+			_team.Name = team.Name;
+			if (_team.Id == 0) _db.Teams.Add(_team);
+			_db.SaveChanges();
+		}
+
 		private List<Team> Filter(List<Team> teams, int manufacturerId)
 		{
 			if (manufacturerId != 0) return Filter(teams.Where(a => a.TeamInformations.Any(b => b.ManufacturerId == manufacturerId)).ToList(), 0);

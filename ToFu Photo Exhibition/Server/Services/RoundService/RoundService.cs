@@ -20,5 +20,14 @@
 			};
 			return response;
 		}
+
+		public async Task SaveRound(Round round)
+		{
+			Round _round = await _db.Rounds.FindAsync(round.Id) ?? new Round();
+			_round.Name = _round.Name;
+			_round.CategoryId = round.CategoryId;
+			if (_round.Id == 0) _db.Rounds.Add(_round);
+			_db.SaveChanges();
+		}
 	}
 }

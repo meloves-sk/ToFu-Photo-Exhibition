@@ -20,5 +20,13 @@
 			};
 			return response;
 		}
+
+		public async Task SaveManufacturer(Manufacturer manufacturer)
+		{
+			Manufacturer _manufacturer = await _db.Manufacturers.FindAsync(manufacturer.Id) ?? new Manufacturer();
+			_manufacturer.Name = manufacturer.Name;
+			if (_manufacturer.Id == 0) _db.Manufacturers.Add(_manufacturer);
+			_db.SaveChanges();
+		}
 	}
 }

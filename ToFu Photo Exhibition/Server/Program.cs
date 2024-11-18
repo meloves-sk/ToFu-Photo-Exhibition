@@ -8,6 +8,7 @@ global using ToFu_Photo_Exhibition.Server.Services.CarService;
 global using ToFu_Photo_Exhibition.Shared.Models;
 global using Microsoft.AspNetCore.Mvc;
 using ToFu_Photo_Exhibition.Server.Services.PhotoService;
+using ToFu_Photo_Exhibition.Server.Services.TeamInformationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<DB>(a => a.UseMySql(builder.Configuration.GetConne
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<ITeamInformationService, TeamInformationService>();
 builder.Services.AddScoped<IRoundService, RoundService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();

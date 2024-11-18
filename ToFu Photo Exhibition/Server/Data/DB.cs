@@ -117,7 +117,6 @@
                 .HasColumnType("int(11)")
                 .HasColumnName("CategoryID");
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Year).HasColumnType("int(11)");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Rounds)
                 .HasForeignKey(d => d.CategoryId)

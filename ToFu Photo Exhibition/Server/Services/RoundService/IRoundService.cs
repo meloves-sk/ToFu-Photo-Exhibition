@@ -3,5 +3,6 @@
 	public interface IRoundService
 	{
 		Task<ServiceResponse<List<Round>>> GetRoundsAsync(int categoryId);
+		Task SaveRound(Round round);
 	}
 }
