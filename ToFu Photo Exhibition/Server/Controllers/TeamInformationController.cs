@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ToFu_Photo_Exhibition.Server.Services.TeamInformationService;
-
-namespace ToFu_Photo_Exhibition.Server.Controllers
+﻿namespace ToFu_Photo_Exhibition.Server.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
@@ -13,22 +9,24 @@ namespace ToFu_Photo_Exhibition.Server.Controllers
 		{
 			_teamInformationService = teamInformationService;
 		}
+
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<TeamInformation>>>> GetTeamInformation()
+		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamInformationResponseDto>>>> GetTeamInformation()
 		{
-			var response = await _teamInformationService.GetTeamInformationsAsync();
-			return Ok(response);
+			return Ok(await _teamInformationService.GetTeamInformationsAsync());
 		}
+
 		[HttpPost]
-		public async Task<ActionResult> RegisterTeamInformation([FromBody] TeamInformation teamInformation)
+		public async Task<ActionResult> RegisterTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
 		{
-			await _teamInformationService.SaveTeamInformation(teamInformation);
+			await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
 			return Ok();
 		}
+
 		[HttpPut]
-		public async Task<ActionResult> UpdateTeamInformation([FromBody] TeamInformation teamInformation)
+		public async Task<ActionResult> UpdateTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
 		{
-			await _teamInformationService.SaveTeamInformation(teamInformation);
+			await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
 			return Ok();
 		}
 	}

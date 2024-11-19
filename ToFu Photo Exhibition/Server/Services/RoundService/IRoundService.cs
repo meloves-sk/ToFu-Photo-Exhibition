@@ -1,8 +1,10 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Services.RoundService
+﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
+
+namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 {
 	public interface IRoundService
 	{
-		Task<ServiceResponse<List<Round>>> GetRoundsAsync(int categoryId);
-		Task SaveRound(Round round);
+		Task<ServiceResponse<IEnumerable<RoundResponseDto>>> GetRoundsAsync(int categoryId);
+		Task SaveRound(RoundRequestDto roundRequestDto);
 	}
 }

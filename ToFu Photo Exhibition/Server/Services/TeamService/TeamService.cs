@@ -1,4 +1,6 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Services.TeamService
+﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
+
+namespace ToFu_Photo_Exhibition.Server.Services.TeamService
 {
 	public class TeamService : ITeamService
 	{
@@ -7,26 +9,28 @@
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Team>>> GetTeamsAsync(int categoryId, int manufacturerId)
+		public async Task<ServiceResponse<IEnumerable<TeamResponseDto>>> GetTeamsAsync(int categoryId, int manufacturerId)
 		{
-			List<Team> teams = new List<Team>();
-			teams.Add(new Team { Id = 0, Name = "すべて" });
-			teams.AddRange(Filter(await _db.Teams.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync(), manufacturerId));
-			ServiceResponse<List<Team>> response = new ServiceResponse<List<Team>>
+			List<TeamResponseDto> teams = new List<TeamResponseDto>();
+			teams.Add(new TeamResponseDto(0, "すべて"));
+			Filter(await _db.Teams.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync(), manufacturerId).ToList().ForEach(a =>
+			{
+				teams.Add(new TeamResponseDto(a.Id, a.Name));
+			});
+			return new ServiceResponse<IEnumerable<TeamResponseDto>>
 			{
 				Data = teams,
 				Success = true,
 				Message = "Success"
 			};
-			return response;
 		}
 
-		public async Task SaveTeam(Team team)
+		public async Task SaveTeam(TeamRequestDto teamRequestDto)
 		{
-			Team _team = await _db.Teams.FindAsync(team.Id) ?? new Team();
-			_team.Name = team.Name;
-			if (_team.Id == 0) _db.Teams.Add(_team);
-			_db.SaveChanges();
+			Team team = await _db.Teams.FindAsync(teamRequestDto.Id) ?? new Team();
+			team.Name = teamRequestDto.Name;
+			if (team.Id == 0) _db.Teams.Add(team);
+			await _db.SaveChangesAsync();
 		}
 
 		private List<Team> Filter(List<Team> teams, int manufacturerId)

@@ -1,14 +1,16 @@
-global using ToFu_Photo_Exhibition.Shared;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
+global using ToFu_Photo_Exhibition.Shared;
+global using ToFu_Photo_Exhibition.Shared.Models;
+global using ToFu_Photo_Exhibition.Shared.Dto.Request;
+global using ToFu_Photo_Exhibition.Shared.Dto.Response;
+global using ToFu_Photo_Exhibition.Server.Services.CarService;
 global using ToFu_Photo_Exhibition.Server.Services.CategoryService;
 global using ToFu_Photo_Exhibition.Server.Services.ManufacturerService;
-global using ToFu_Photo_Exhibition.Server.Services.TeamService;
+global using ToFu_Photo_Exhibition.Server.Services.PhotoService;
 global using ToFu_Photo_Exhibition.Server.Services.RoundService;
-global using ToFu_Photo_Exhibition.Server.Services.CarService;
-global using ToFu_Photo_Exhibition.Shared.Models;
-global using Microsoft.AspNetCore.Mvc;
-using ToFu_Photo_Exhibition.Server.Services.PhotoService;
-using ToFu_Photo_Exhibition.Server.Services.TeamInformationService;
+global using ToFu_Photo_Exhibition.Server.Services.TeamInformationService;
+global using ToFu_Photo_Exhibition.Server.Services.TeamService;
 
 var builder = WebApplication.CreateBuilder(args);
 

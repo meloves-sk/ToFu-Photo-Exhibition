@@ -1,4 +1,6 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
+﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
+
+namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 {
 	public class ManufacturerService : IManufacturerService
 	{
@@ -7,26 +9,25 @@
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Manufacturer>>> GetManufacturersAsync(int categoryId)
+		public async Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetManufacturersAsync(int categoryId)
 		{
-			List<Manufacturer> manufacturers = new List<Manufacturer>();
-			manufacturers.Add(new Manufacturer { Id = 0, Name = "すべて" });
-			manufacturers.AddRange(await _db.Manufacturers.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync());
-			ServiceResponse<List<Manufacturer>> response = new ServiceResponse<List<Manufacturer>>
+			List<ManufacturerResponseDto> manufacturers = new List<ManufacturerResponseDto>();
+			manufacturers.Add(new ManufacturerResponseDto(0, "すべて"));
+			await _db.Manufacturers.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ForEachAsync(a => manufacturers.Add(new ManufacturerResponseDto(a.Id, a.Name)));
+			return new ServiceResponse<IEnumerable<ManufacturerResponseDto>>
 			{
 				Data = manufacturers,
 				Success = true,
 				Message = "Success"
 			};
-			return response;
 		}
 
-		public async Task SaveManufacturer(Manufacturer manufacturer)
+		public async Task SaveManufacturer(ManufacturerRequestDto manufacturerRequestDto)
 		{
-			Manufacturer _manufacturer = await _db.Manufacturers.FindAsync(manufacturer.Id) ?? new Manufacturer();
-			_manufacturer.Name = manufacturer.Name;
+			Manufacturer _manufacturer = await _db.Manufacturers.FindAsync(manufacturerRequestDto.Id) ?? new Manufacturer();
+			_manufacturer.Name = manufacturerRequestDto.Name;
 			if (_manufacturer.Id == 0) _db.Manufacturers.Add(_manufacturer);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 		}
 	}
 }

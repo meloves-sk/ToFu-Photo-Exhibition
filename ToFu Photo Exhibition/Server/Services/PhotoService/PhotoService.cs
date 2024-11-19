@@ -8,21 +8,23 @@ namespace ToFu_Photo_Exhibition.Server.Services.PhotoService
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Photo>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId)
+		public async Task<ServiceResponse<IEnumerable<PhotoResponseDto>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
-			List<Photo> photos = Filter(
-				await _db.Photos.Include(a => a.Round).ThenInclude(a => a.Category)
+			List<PhotoResponseDto> photos = new List<PhotoResponseDto>();
+			Filter(await _db.Photos.Include(a => a.Round).ThenInclude(a => a.Category)
 				.Include(a => a.Car).ThenInclude(a => a.TeamInformation).ThenInclude(a => a.Team)
 				.Include(a => a.Car).ThenInclude(a => a.TeamInformation).ThenInclude(a => a.Manufacturer)
 				.Where(a => a.Round.CategoryId == categoryId)
-				.ToListAsync(), roundId, manufacturerId, teamId, carId);
-			ServiceResponse<List<Photo>> response = new ServiceResponse<List<Photo>>
+				.ToListAsync(), roundId, manufacturerId, teamId, carId).ForEach(a =>
+				{
+					photos.Add(new PhotoResponseDto(a.Id, a.FilePath, a.Description, a.RoundId, a.CarId, a.Round.Name, a.Round.Category.Name, a.Car.Name, a.Car.CarNo, a.Car.TeamInformation.Team.Name, a.Car.TeamInformation.Manufacturer.Name));
+				});
+			return new ServiceResponse<IEnumerable<PhotoResponseDto>>
 			{
 				Data = photos,
 				Success = true,
 				Message = "Success"
 			};
-			return response;
 		}
 
 		private List<Photo> Filter(List<Photo> photos, int roundId, int manufacturerId, int teamId, int carId)

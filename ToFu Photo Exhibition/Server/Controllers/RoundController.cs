@@ -9,22 +9,24 @@
 		{
 			_roundService = roundService;
 		}
+
 		[HttpGet("category/{categoryId}")]
-		public async Task<ActionResult<ServiceResponse<List<Round>>>> GetRound(int categoryId)
+		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRound(int categoryId)
 		{
-			var response = await _roundService.GetRoundsAsync(categoryId);
-			return Ok(response);
+			return Ok(await _roundService.GetRoundsAsync(categoryId));
 		}
+
 		[HttpPost]
-		public async Task<ActionResult> RegisterRound([FromBody] Round round)
+		public async Task<ActionResult> RegisterRound([FromBody] RoundRequestDto roundRequestDto)
 		{
-			await _roundService.SaveRound(round);
+			await _roundService.SaveRound(roundRequestDto);
 			return Ok();
 		}
+
 		[HttpPut]
-		public async Task<ActionResult> UpdateRound([FromBody] Round round)
+		public async Task<ActionResult> UpdateRound([FromBody] RoundRequestDto roundRequestDto)
 		{
-			await _roundService.SaveRound(round);
+			await _roundService.SaveRound(roundRequestDto);
 			return Ok();
 		}
 	}

@@ -1,4 +1,6 @@
 ﻿
+using ToFu_Photo_Exhibition.Shared.Dto.Request;
+
 namespace ToFu_Photo_Exhibition.Server.Services.CarService
 {
 	public class CarService : ICarService
@@ -8,28 +10,30 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Car>>> GetCarAsync(int categoryId, int manufacturerId, int teamId)
+		public async Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetCarAsync(int categoryId, int manufacturerId, int teamId)
 		{
-			List<Car> cars = new List<Car>();
-			cars.Add(new Car { Id = 0, Name = "すべて" });
-			cars.AddRange(Filter(await _db.Cars.Include(a => a.TeamInformation).Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId));
-			ServiceResponse<List<Car>> response = new ServiceResponse<List<Car>>
+			List<CarResponseDto> cars = new List<CarResponseDto>();
+			cars.Add(new CarResponseDto(0, "すべて", 0, 0, string.Empty, string.Empty, string.Empty));
+			Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team).Include(a => a.TeamInformation).ThenInclude(a => a.Manufacturer).Include(a => a.TeamInformation).ThenInclude(a => a.Category).Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId).ForEach(a =>
+			{
+				cars.Add(new CarResponseDto(a.Id, a.Name, a.CarNo, a.TeamInformationId, a.TeamInformation.Team.Name, a.TeamInformation.Manufacturer.Name, a.TeamInformation.Category.Name));
+			});
+			return new ServiceResponse<IEnumerable<CarResponseDto>>
 			{
 				Data = cars,
 				Success = true,
 				Message = "Success"
 			};
-			return response;
 		}
 
-		public async Task SaveCar(Car car)
+		public async Task SaveCar(CarRequestDto carRequestDto)
 		{
-			Car _car = await _db.Cars.FindAsync(car.Id) ?? new Car();
-			_car.Name = car.Name;
-			_car.CarNo = car.CarNo;
-			_car.TeamInformationId = car.TeamInformationId;
-			if (_car.Id == 0) _db.Cars.Add(_car);
-			_db.SaveChanges();
+			Car car = await _db.Cars.FindAsync(carRequestDto.Id) ?? new Car();
+			car.Name = carRequestDto.Name;
+			car.CarNo = carRequestDto.CarNo;
+			car.TeamInformationId = carRequestDto.TeamInformationId;
+			if (car.Id == 0) _db.Cars.Add(car);
+			await _db.SaveChangesAsync();
 		}
 
 		private List<Car> Filter(List<Car> cars, int manufacturerId, int teamId)

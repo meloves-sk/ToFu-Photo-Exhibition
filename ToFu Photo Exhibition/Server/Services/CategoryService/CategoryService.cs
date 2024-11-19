@@ -1,22 +1,23 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
+﻿
+namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
 {
-    public class CategoryService : ICategoryService
+	public class CategoryService : ICategoryService
 	{
 		private readonly DB _db;
 		public CategoryService(DB db)
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<List<Category>>> GetCategoriesAsync()
+		public async Task<ServiceResponse<IEnumerable<CategoryResponseDto>>> GetCategoriesAsync()
 		{
-			List<Category> categories = await _db.Categories.ToListAsync();
-			ServiceResponse<List<Category>> response = new ServiceResponse<List<Category>>
+			List<CategoryResponseDto> categories = new List<CategoryResponseDto>();
+			await _db.Categories.ForEachAsync(a => categories.Add(new CategoryResponseDto(a.Id, a.Name)));
+			return new ServiceResponse<IEnumerable<CategoryResponseDto>>
 			{
 				Data = categories,
 				Success = true,
 				Message = "Success"
 			};
-			return response;
 		}
 	}
 }

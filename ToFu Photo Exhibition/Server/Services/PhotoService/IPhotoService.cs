@@ -2,6 +2,6 @@
 {
 	public interface IPhotoService
 	{
-		Task<ServiceResponse<List<Photo>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId);
+		Task<ServiceResponse<IEnumerable<PhotoResponseDto>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId);
 	}
 }

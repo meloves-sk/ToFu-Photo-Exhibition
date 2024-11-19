@@ -11,21 +11,22 @@
 		}
 
 		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}")]
-		public async Task<ActionResult<ServiceResponse<List<Team>>>> GetTeam(int categoryId, int manufacturerId)
+		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamResponseDto>>>> GetTeam(int categoryId, int manufacturerId)
 		{
-			var result = await _teamService.GetTeamsAsync(categoryId, manufacturerId);
-			return Ok(result);
+			return Ok(await _teamService.GetTeamsAsync(categoryId, manufacturerId));
 		}
+
 		[HttpPost]
-		public async Task<ActionResult> RegisterTeam([FromBody] Team team)
+		public async Task<ActionResult> RegisterTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
-			await _teamService.SaveTeam(team);
+			await _teamService.SaveTeam(teamRequestDto);
 			return Ok();
 		}
+
 		[HttpPut]
-		public async Task<ActionResult> UpdateTeam([FromBody] Team team)
+		public async Task<ActionResult> UpdateTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
-			await _teamService.SaveTeam(team);
+			await _teamService.SaveTeam(teamRequestDto);
 			return Ok();
 		}
 	}

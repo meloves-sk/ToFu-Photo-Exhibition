@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-
-namespace ToFu_Photo_Exhibition.Server.Controllers
+﻿namespace ToFu_Photo_Exhibition.Server.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
@@ -13,23 +11,22 @@ namespace ToFu_Photo_Exhibition.Server.Controllers
 		}
 
 		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}")]
-		public async Task<ActionResult<ServiceResponse<List<Car>>>> GetCar(int categoryId, int manufacturerId, int teamId)
+		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetCar(int categoryId, int manufacturerId, int teamId)
 		{
-			var response = await _carService.GetCarAsync(categoryId, manufacturerId, teamId);
-			return Ok(response);
+			return Ok(await _carService.GetCarAsync(categoryId, manufacturerId, teamId));
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> RegisterCar([FromBody] Car car)
+		public async Task<ActionResult> RegisterCar([FromBody] CarRequestDto carRequestDto)
 		{
-			await _carService.SaveCar(car);
+			await _carService.SaveCar(carRequestDto);
 			return Ok();
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateCar([FromBody] Car car)
+		public async Task<ActionResult> UpdateCar([FromBody] CarRequestDto carRequestDto)
 		{
-			await _carService.SaveCar(car);
+			await _carService.SaveCar(carRequestDto);
 			return Ok();
 		}
 	}
