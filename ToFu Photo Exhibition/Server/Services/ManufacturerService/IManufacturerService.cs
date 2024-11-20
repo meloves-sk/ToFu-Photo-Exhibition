@@ -4,7 +4,8 @@ namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 {
 	public interface IManufacturerService
 	{
-		Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetManufacturersAsync(int categoryId);
-		Task SaveManufacturer(ManufacturerRequestDto manufacturerRequestDto);
+		Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetManufacturersAsync();
+		Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetFilterManufacturersAsync(int categoryId);
+		Task<ServiceResponse<bool>> SaveManufacturer(ManufacturerRequestDto manufacturerRequestDto);
 	}
 }

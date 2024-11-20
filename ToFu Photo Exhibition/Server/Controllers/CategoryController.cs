@@ -1,6 +1,6 @@
 ﻿namespace ToFu_Photo_Exhibition.Server.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class CategoryController : ControllerBase
 	{

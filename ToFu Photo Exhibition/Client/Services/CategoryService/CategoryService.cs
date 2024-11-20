@@ -1,6 +1,8 @@
-﻿namespace ToFu_Photo_Exhibition.Client.Services.CategoryService
+﻿using ToFu_Photo_Exhibition.Shared.Dto.Response;
+
+namespace ToFu_Photo_Exhibition.Client.Services.CategoryService
 {
-	public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
 	{
 		private readonly HttpClient _http;
 		public CategoryService(HttpClient http)

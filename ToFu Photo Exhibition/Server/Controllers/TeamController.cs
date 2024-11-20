@@ -10,24 +10,32 @@
 			_teamService = teamService;
 		}
 
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamResponseDto>>>> GetTeam()
+		{
+			return Ok(await _teamService.GetTeamsAsync());
+		}
+
 		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamResponseDto>>>> GetTeam(int categoryId, int manufacturerId)
 		{
-			return Ok(await _teamService.GetTeamsAsync(categoryId, manufacturerId));
+			return Ok(await _teamService.GetFilterTeamsAsync(categoryId, manufacturerId));
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> RegisterTeam([FromBody] TeamRequestDto teamRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> RegisterTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
-			await _teamService.SaveTeam(teamRequestDto);
-			return Ok();
+			var response = await _teamService.SaveTeam(teamRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateTeam([FromBody] TeamRequestDto teamRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> UpdateTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
-			await _teamService.SaveTeam(teamRequestDto);
-			return Ok();
+			var response = await _teamService.SaveTeam(teamRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 	}
 }

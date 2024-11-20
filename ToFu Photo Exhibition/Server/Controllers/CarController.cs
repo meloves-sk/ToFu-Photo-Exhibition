@@ -10,24 +10,32 @@
 			_carService = carService;
 		}
 
-		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}")]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetCar(int categoryId, int manufacturerId, int teamId)
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetCars()
 		{
-			return Ok(await _carService.GetCarAsync(categoryId, manufacturerId, teamId));
+			return Ok(await _carService.GetCarsAsync());
+		}
+
+		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}")]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetFilterCars(int categoryId, int manufacturerId, int teamId)
+		{
+			return Ok(await _carService.GetFilterCarsAsync(categoryId, manufacturerId, teamId));
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> RegisterCar([FromBody] CarRequestDto carRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> RegisterCar([FromBody] CarRequestDto carRequestDto)
 		{
-			await _carService.SaveCar(carRequestDto);
-			return Ok();
+			var response = await _carService.SaveCar(carRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateCar([FromBody] CarRequestDto carRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> UpdateCar([FromBody] CarRequestDto carRequestDto)
 		{
-			await _carService.SaveCar(carRequestDto);
-			return Ok();
+			var response = await _carService.SaveCar(carRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 	}
 }

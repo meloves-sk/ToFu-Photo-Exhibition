@@ -1,5 +1,4 @@
-﻿
-namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
 {
 	public class CategoryService : ICategoryService
 	{
@@ -12,12 +11,7 @@ namespace ToFu_Photo_Exhibition.Server.Services.CategoryService
 		{
 			List<CategoryResponseDto> categories = new List<CategoryResponseDto>();
 			await _db.Categories.ForEachAsync(a => categories.Add(new CategoryResponseDto(a.Id, a.Name)));
-			return new ServiceResponse<IEnumerable<CategoryResponseDto>>
-			{
-				Data = categories,
-				Success = true,
-				Message = "Success"
-			};
+			return new ServiceResponse<IEnumerable<CategoryResponseDto>>(categories, true, "正常に取得されました");
 		}
 	}
 }

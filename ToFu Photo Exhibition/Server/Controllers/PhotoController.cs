@@ -10,7 +10,7 @@
 			_photoService = photoService;
 		}
 
-		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}/car/{carId}")]
+		[HttpGet("category/{categoryId}/round/{roundId}/manufacturer/{manufacturerId}/team/{teamId}/car/{carId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<PhotoResponseDto>>>> GetPhotos(int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
 			return Ok(await _photoService.GetPhotosAsync(categoryId, roundId, manufacturerId, teamId, carId));

@@ -1,5 +1,4 @@
-﻿
-namespace ToFu_Photo_Exhibition.Server.Services.PhotoService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.PhotoService
 {
 	public class PhotoService : IPhotoService
 	{
@@ -19,12 +18,7 @@ namespace ToFu_Photo_Exhibition.Server.Services.PhotoService
 				{
 					photos.Add(new PhotoResponseDto(a.Id, a.FilePath, a.Description, a.RoundId, a.CarId, a.Round.Name, a.Round.Category.Name, a.Car.Name, a.Car.CarNo, a.Car.TeamInformation.Team.Name, a.Car.TeamInformation.Manufacturer.Name));
 				});
-			return new ServiceResponse<IEnumerable<PhotoResponseDto>>
-			{
-				Data = photos,
-				Success = true,
-				Message = "Success"
-			};
+			return new ServiceResponse<IEnumerable<PhotoResponseDto>>(photos, true, "正常に取得されました");
 		}
 
 		private List<Photo> Filter(List<Photo> photos, int roundId, int manufacturerId, int teamId, int carId)

@@ -17,17 +17,19 @@
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> RegisterTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> RegisterTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
 		{
-			await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
-			return Ok();
+			var response = await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> UpdateTeamInformation([FromBody] TeamInformationRequestDto teamInformationRequestDto)
 		{
-			await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
-			return Ok();
+			var response = await _teamInformationService.SaveTeamInformation(teamInformationRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 	}
 }

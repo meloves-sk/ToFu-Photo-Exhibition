@@ -1,4 +1,6 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Controllers
+﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
+
+namespace ToFu_Photo_Exhibition.Server.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
@@ -10,24 +12,32 @@
 			_roundService = roundService;
 		}
 
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRound()
+		{
+			return Ok(await _roundService.GetRoundsAsync());
+		}
+
 		[HttpGet("category/{categoryId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRound(int categoryId)
 		{
-			return Ok(await _roundService.GetRoundsAsync(categoryId));
+			return Ok(await _roundService.GetFilterRoundsAsync(categoryId));
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> RegisterRound([FromBody] RoundRequestDto roundRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> RegisterRound([FromBody] RoundRequestDto roundRequestDto)
 		{
-			await _roundService.SaveRound(roundRequestDto);
-			return Ok();
+			var response = await _roundService.SaveRound(roundRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateRound([FromBody] RoundRequestDto roundRequestDto)
+		public async Task<ActionResult<ServiceResponse<bool>>> UpdateRound([FromBody] RoundRequestDto roundRequestDto)
 		{
-			await _roundService.SaveRound(roundRequestDto);
-			return Ok();
+			var response = await _roundService.SaveRound(roundRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
 		}
 	}
 }

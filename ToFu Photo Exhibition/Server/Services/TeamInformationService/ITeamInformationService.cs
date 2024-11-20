@@ -2,9 +2,9 @@
 
 namespace ToFu_Photo_Exhibition.Server.Services.TeamInformationService
 {
-	public interface ITeamInformationService
+    public interface ITeamInformationService
 	{
 		Task<ServiceResponse<IEnumerable<TeamInformationResponseDto>>> GetTeamInformationsAsync();
-		Task SaveTeamInformation(TeamInformationRequestDto teamInformationRequestDto);
+		Task<ServiceResponse<bool>> SaveTeamInformation(TeamInformationRequestDto teamInformationRequestDto);
 	}
 }
