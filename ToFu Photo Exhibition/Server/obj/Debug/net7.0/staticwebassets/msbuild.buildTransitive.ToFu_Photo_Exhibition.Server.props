@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\ToFu_Photo_Exhibition.Server.props" />
-</Project>

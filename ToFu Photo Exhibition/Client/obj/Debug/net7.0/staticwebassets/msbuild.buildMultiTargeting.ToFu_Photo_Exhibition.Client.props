@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ToFu_Photo_Exhibition.Client.props" />
-</Project>
