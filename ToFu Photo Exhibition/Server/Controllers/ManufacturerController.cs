@@ -1,0 +1,41 @@
+﻿namespace ToFu_Photo_Exhibition.Server.Controllers
+{
+	[Route("api/[controller]")]
+	[ApiController]
+	public class ManufacturerController : ControllerBase
+	{
+		private readonly IManufacturerService _manufacturerService;
+		public ManufacturerController(IManufacturerService manufacturerService)
+		{
+			_manufacturerService = manufacturerService;
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<ManufacturerResponseDto>>>> GetManufacturers()
+		{
+			return Ok(await _manufacturerService.GetManufacturersAsync());
+		}
+
+		[HttpGet("category/{categoryId}")]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<ManufacturerResponseDto>>>> GetManufacturer(int categoryId)
+		{
+			return Ok(await _manufacturerService.GetFilterManufacturersAsync(categoryId));
+		}
+
+		[HttpPost]
+		public async Task<ActionResult<ServiceResponse<bool>>> RegisterManufacturer([FromBody] ManufacturerRequestDto manufacturerRequestDto)
+		{
+			var response = await _manufacturerService.SaveManufacturer(manufacturerRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
+		}
+
+		[HttpPut]
+		public async Task<ActionResult<ServiceResponse<bool>>> UpdateManufacturer([FromBody] ManufacturerRequestDto manufacturerRequestDto)
+		{
+			var response = await _manufacturerService.SaveManufacturer(manufacturerRequestDto);
+			if (!response.Success) return BadRequest(response);
+			return Ok(response);
+		}
+	}
+}
