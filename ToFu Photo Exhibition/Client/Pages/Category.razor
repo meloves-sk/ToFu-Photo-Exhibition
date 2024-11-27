@@ -17,7 +17,7 @@
 		</div>
 		<div class="box manufacturer">
 			<p>Manufacturer</p>
-			<select class="form-select" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
+			<select class="form-select"  @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
 				@foreach (var manufacturer in ManufacturerService.Manufacturers)
 				{
 					<option value="@manufacturer.Id">@manufacturer.Name</option>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="box team">
 			<p>Team</p>
-			<select class="form-select" @onchange="(e => TeamChanged(e.Value.ToString()))">
+			<select class="form-select" value="@teamId" @onchange="(e => TeamChanged(e.Value.ToString()))">
 				@foreach (var team in TeamService.Teams)
 				{
 					<option value="@team.Id">@team.Name</option>
@@ -35,7 +35,7 @@
 		</div>
 		<div class="box car">
 			<p>Car</p>
-			<select class="form-select" @onchange="(e => CarChanged(e.Value.ToString()))">
+			<select class="form-select" value="@carId" @onchange="(e => CarChanged(e.Value.ToString()))">
 				@foreach (var car in CarService.Cars)
 				{
 					<option value="@car.Id">@car.Name</option>
