@@ -11,7 +11,7 @@
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<CategoryResponseDto>>>> GetCategory()
+		public async Task<ActionResult<ServiceResponse<IEnumerable<CategoryResponseDto>>>> GetCategories()
 		{
 			return Ok(await _categoryService.GetCategoriesAsync());
 		}

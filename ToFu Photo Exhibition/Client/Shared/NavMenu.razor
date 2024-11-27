@@ -1,59 +1,87 @@
-﻿@inject ICategoryService CategoryService;
-@if (CategoryService.Categories == null || CategoryService.Categories.Count() == 0)
-{
-	<span>Loading now...</span>
-}
-else
-{
-
-	<div class="top-row ps-3 navbar navbar-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="">ToFu Photo Exhibition</a>
-			<div class="cubic">
-				<a href="https://x.com/TOFU_585" target="_blank">
-					<img src="tpe_black.jpeg" id="img-logo" class="img-cubic" />
-				</a>
-				<a href="https://www.instagram.com/tofu_585/" target="_blank">
-					<img src="x-icon.jpg" id="img-xicon" class="img-cubic" />
-				</a>
-			</div>
-			<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-		</div>
+﻿<div class="top-row navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">ToFu Photo Exhibition</a>
+		<a href="https://x.com/TOFU_585" target="_blank">
+			<img src="tpe_black.jpeg" id="img-logo" class="img" />
+		</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 	</div>
+</div>
 
-	<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-		<nav class="flex-column">
-			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-					<span class="oi" aria-hidden="true">Home</span>
-				</NavLink>
-			</div>
-			@foreach (var category in CategoryService.Categories)
-			{
-				<div class="nav-item px-3">
-					<NavLink class="nav-link" href="">
-						<span class="oi" aria-hidden="true">@category.Name</span>
-					</NavLink>
-				</div>
-			}
-		</nav>
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+	<div class="btn-category">
+		<a class="@HomeCssClass"  href="" @onclick="SelectHome">Home</a>
+		<a class="@SGTCssClass" href="/category/1/supergt" @onclick="SelectSGT">SUPER GT</a>
+		<a class="@SFCssClass" href="/category/2/superformula" @onclick="SelectSF">SUPER FORMULA</a>
+		<a class="@StaiCssClass" href="/category/3/supertaikyu" @onclick="SelectStai">スーパー耐久</a>
+		<a class="@OtherCssClass" href="/category/4/other" @onclick="SelectOther">Other Race</a>
 	</div>
-}
+</div>
 
 @code {
 	private bool collapseNavMenu = true;
+	private bool homeSelect = true;
+	private bool sgtSelect = false;
+	private bool sfSelect = false;
+	private bool staiSelect = false;
+	private bool otherSelect = false;
 
 	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+	private string HomeCssClass => homeSelect ? "select" : "unselect";
+	private string SGTCssClass => sgtSelect ? "select" : "unselect";
+	private string SFCssClass => sfSelect ? "select" : "unselect";
+	private string StaiCssClass => staiSelect ? "select" : "unselect";
+	private string OtherCssClass => otherSelect ? "select" : "unselect";
 
 	private void ToggleNavMenu()
 	{
 		collapseNavMenu = !collapseNavMenu;
 	}
 
-	protected override async Task OnInitializedAsync()
+	private void SelectHome()
 	{
-		await CategoryService.GetCategories();
+		homeSelect = true;
+		sgtSelect = false;
+		sfSelect = false;
+		staiSelect = false;
+		otherSelect = false;
+	}
+
+	private void SelectSGT()
+	{
+		homeSelect = false;
+		sgtSelect = true;
+		sfSelect = false;
+		staiSelect = false;
+		otherSelect = false;
+	}
+
+	private void SelectSF()
+	{
+		homeSelect = false;
+		sgtSelect = false;
+		sfSelect = true;
+		staiSelect = false;
+		otherSelect = false;
+	}
+
+	private void SelectStai()
+	{
+		homeSelect = false;
+		sgtSelect = false;
+		sfSelect = false;
+		staiSelect = true;
+		otherSelect = false;
+	}
+
+	private void SelectOther()
+	{
+		homeSelect = false;
+		sgtSelect = false;
+		sfSelect = false;
+		staiSelect = false;
+		otherSelect = true;
 	}
 }

@@ -17,7 +17,7 @@
 		}
 
 		[HttpGet("category/{categoryId}")]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<ManufacturerResponseDto>>>> GetManufacturer(int categoryId)
+		public async Task<ActionResult<ServiceResponse<IEnumerable<ManufacturerResponseDto>>>> GetFilterManufacturers(int categoryId)
 		{
 			return Ok(await _manufacturerService.GetFilterManufacturersAsync(categoryId));
 		}

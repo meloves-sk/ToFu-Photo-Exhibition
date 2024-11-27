@@ -11,7 +11,7 @@
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamInformationResponseDto>>>> GetTeamInformation()
+		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamInformationResponseDto>>>> GetTeamInformations()
 		{
 			return Ok(await _teamInformationService.GetTeamInformationsAsync());
 		}

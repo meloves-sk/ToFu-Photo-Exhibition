@@ -13,13 +13,13 @@ namespace ToFu_Photo_Exhibition.Server.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRound()
+		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRounds()
 		{
 			return Ok(await _roundService.GetRoundsAsync());
 		}
 
 		[HttpGet("category/{categoryId}")]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRound(int categoryId)
+		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetFilterRounds(int categoryId)
 		{
 			return Ok(await _roundService.GetFilterRoundsAsync(categoryId));
 		}
