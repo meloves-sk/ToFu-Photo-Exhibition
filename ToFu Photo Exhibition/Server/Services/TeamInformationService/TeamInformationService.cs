@@ -1,9 +1,4 @@
-﻿
-using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
-using System.Runtime.CompilerServices;
-using ToFu_Photo_Exhibition.Shared.Dto.Request;
-
-namespace ToFu_Photo_Exhibition.Server.Services.TeamInformationService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.TeamInformationService
 {
 	public class TeamInformationService : ITeamInformationService
 	{

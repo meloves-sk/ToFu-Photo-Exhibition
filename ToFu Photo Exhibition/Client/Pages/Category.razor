@@ -17,7 +17,7 @@
 		</div>
 		<div class="box manufacturer">
 			<p>Manufacturer</p>
-			<select class="form-select"  @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
+			<select class="form-select" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
 				@foreach (var manufacturer in ManufacturerService.Manufacturers)
 				{
 					<option value="@manufacturer.Id">@manufacturer.Name</option>

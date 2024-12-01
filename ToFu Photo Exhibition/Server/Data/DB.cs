@@ -1,4 +1,6 @@
-﻿public partial class DB : DbContext
+﻿namespace ToFu_Photo_Exhibition.Server.Data;
+
+public partial class DB : DbContext
 {
     public DB()
     {
@@ -24,153 +26,102 @@
     public virtual DbSet<TeamInformation> TeamInformations { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("name=ConnectionStrings:DB", ServerVersion.Parse("10.11.6-mariadb"));
+        => optionsBuilder.UseSqlServer("name=ConnectionStrings:DB");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .UseCollation("utf8mb4_general_ci")
-            .HasCharSet("utf8mb4");
-
         modelBuilder.Entity<Car>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.HasIndex(e => e.TeamInformationId, "Car_TeamInformation_idx");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.CarNo).HasColumnType("int(11)");
-            entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.TeamInformationId)
-                .HasColumnType("int(11)")
-                .HasColumnName("TeamInformationID");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.TeamInformationId).HasColumnName("TeamInformationID");
 
             entity.HasOne(d => d.TeamInformation).WithMany(p => p.Cars)
                 .HasForeignKey(d => d.TeamInformationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Car_TeamInformation");
+                .HasConstraintName("FK_Cars_TeamInformations");
         });
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Manufacturer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Photo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.HasIndex(e => e.CarId, "Photo_Car_idx");
-
-            entity.HasIndex(e => e.RoundId, "Photo_Round_idx");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.CarId)
-                .HasColumnType("int(11)")
-                .HasColumnName("CarID");
-            entity.Property(e => e.Description).HasMaxLength(1000);
-            entity.Property(e => e.FilePath).HasMaxLength(1000);
-            entity.Property(e => e.RoundId)
-                .HasColumnType("int(11)")
-                .HasColumnName("RoundID");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CarId).HasColumnName("CarID");
+            entity.Property(e => e.Description).IsUnicode(false);
+            entity.Property(e => e.FilePath).IsUnicode(false);
+            entity.Property(e => e.RoundId).HasColumnName("RoundID");
 
             entity.HasOne(d => d.Car).WithMany(p => p.Photos)
                 .HasForeignKey(d => d.CarId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Photo_Car");
+                .HasConstraintName("FK_Photos_Cars");
 
             entity.HasOne(d => d.Round).WithMany(p => p.Photos)
                 .HasForeignKey(d => d.RoundId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Photo_Round");
+                .HasConstraintName("FK_Photos_Rounds");
         });
 
         modelBuilder.Entity<Round>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.HasIndex(e => e.CategoryId, "Round_Category_idx");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.CategoryId)
-                .HasColumnType("int(11)")
-                .HasColumnName("CategoryID");
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Rounds)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Round_Category");
+                .HasConstraintName("FK_Rounds_Categories");
         });
 
         modelBuilder.Entity<Team>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TeamInformation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.HasIndex(e => e.CategoryId, "TeamInformation_Category_idx");
-
-            entity.HasIndex(e => e.ManufacturerId, "TeamInformation_Manufacturer_idx");
-
-            entity.HasIndex(e => e.TeamId, "TeamInformation_Teams_idx");
-
-            entity.Property(e => e.Id)
-                .HasColumnType("int(11)")
-                .HasColumnName("ID");
-            entity.Property(e => e.CategoryId)
-                .HasColumnType("int(11)")
-                .HasColumnName("CategoryID");
-            entity.Property(e => e.ManufacturerId)
-                .HasColumnType("int(11)")
-                .HasColumnName("ManufacturerID");
-            entity.Property(e => e.TeamId)
-                .HasColumnType("int(11)")
-                .HasColumnName("TeamID");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
+            entity.Property(e => e.TeamId).HasColumnName("TeamID");
 
             entity.HasOne(d => d.Category).WithMany(p => p.TeamInformations)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("TeamInformation_Category");
+                .HasConstraintName("FK_TeamInformations_Categories");
 
             entity.HasOne(d => d.Manufacturer).WithMany(p => p.TeamInformations)
                 .HasForeignKey(d => d.ManufacturerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("TeamInformation_Manufacturer");
+                .HasConstraintName("FK_TeamInformations_Manufacturers");
 
             entity.HasOne(d => d.Team).WithMany(p => p.TeamInformations)
                 .HasForeignKey(d => d.TeamId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("TeamInformation_Teams");
+                .HasConstraintName("FK_TeamInformations_Teams");
         });
 
         OnModelCreatingPartial(modelBuilder);
