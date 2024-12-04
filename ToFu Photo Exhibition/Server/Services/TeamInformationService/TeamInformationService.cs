@@ -9,8 +9,8 @@
 		}
 		public async Task<ServiceResponse<IEnumerable<TeamInformationResponseDto>>> GetTeamInformationsAsync()
 		{
-			List<TeamInformationResponseDto> teamInformations = new List<TeamInformationResponseDto>();
-			await _db.TeamInformations.Include(a => a.Manufacturer).Include(a => a.Team).Include(a => a.Category).ForEachAsync(a => teamInformations.Add(new TeamInformationResponseDto(a.Id, a.TeamId, a.ManufacturerId, a.CategoryId, a.Team.Name, a.Manufacturer.Name, a.Category.Name)));
+			IEnumerable<TeamInformationResponseDto> teamInformations = (await _db.TeamInformations.Include(a => a.Manufacturer).Include(a => a.Team).Include(a => a.Category).ToListAsync())
+				.Select(a => new TeamInformationResponseDto(a.Id, a.TeamId, a.ManufacturerId, a.CategoryId, a.Team.Name, a.Manufacturer.Name, a.Category.Name));
 			return new ServiceResponse<IEnumerable<TeamInformationResponseDto>>(teamInformations, true, "正常に取得されました");
 		}
 
@@ -24,7 +24,10 @@
 			teamInformation.TeamId = teamInformationRequestDto.Id;
 			teamInformation.ManufacturerId = teamInformationRequestDto.ManufacturerId;
 			teamInformation.CategoryId = teamInformationRequestDto.CategoryId;
-			if (teamInformation.Id == 0) _db.TeamInformations.Add(teamInformation);
+			if (teamInformation.Id == 0)
+			{
+				_db.TeamInformations.Add(teamInformation);
+			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}

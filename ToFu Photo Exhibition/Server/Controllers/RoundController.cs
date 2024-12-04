@@ -12,12 +12,6 @@ namespace ToFu_Photo_Exhibition.Server.Controllers
 			_roundService = roundService;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetRounds()
-		{
-			return Ok(await _roundService.GetRoundsAsync());
-		}
-
 		[HttpGet("category/{categoryId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<RoundResponseDto>>>> GetFilterRounds(int categoryId)
 		{

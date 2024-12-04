@@ -13,8 +13,12 @@ namespace ToFu_Photo_Exhibition.Client.Services.TeamService
 		public async Task GetFilterTeams(int categoryId, int manufacturerId)
 		{
 			Teams.Clear();
+			Teams.Add(new TeamResponseDto(0, "ALL"));
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<TeamResponseDto>>>($"api/team/category/{categoryId}/manufacturer/{manufacturerId}");
-			if (result != null) Teams.AddRange(result.Data);
+			if (result != null && result.Data != null)
+			{
+				Teams.AddRange(result.Data);
+			}
 		}
 	}
 }

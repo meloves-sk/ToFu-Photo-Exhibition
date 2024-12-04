@@ -14,7 +14,10 @@ namespace ToFu_Photo_Exhibition.Client.Services.PhotoService
 		{
 			Photos.Clear();
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<PhotoResponseDto>>>($"api/photo/category/{categoryId}/round/{roundId}/manufacturer/{manufacturerId}/team/{teamId}/car/{carId}");
-			if (result != null) Photos.AddRange(result.Data);
+			if (result != null && result.Data != null)
+			{
+				Photos.AddRange(result.Data);
+			}
 		}
 	}
 }

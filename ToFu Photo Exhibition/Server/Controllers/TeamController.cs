@@ -10,12 +10,6 @@
 			_teamService = teamService;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamResponseDto>>>> GetTeams()
-		{
-			return Ok(await _teamService.GetTeamsAsync());
-		}
-
 		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamResponseDto>>>> GetFilterTeams(int categoryId, int manufacturerId)
 		{

@@ -1,6 +1,4 @@
-﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
-
-namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 {
 	public class ManufacturerService : IManufacturerService
 	{
@@ -10,21 +8,13 @@ namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 			_db = db;
 		}
 
-		public async Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetManufacturersAsync()
-		{
-			List<ManufacturerResponseDto> manufacturers = new List<ManufacturerResponseDto>();
-			await _db.Manufacturers.Include(a => a.TeamInformations).ForEachAsync(a => manufacturers.Add(new ManufacturerResponseDto(a.Id, a.Name)));
-			return new ServiceResponse<IEnumerable<ManufacturerResponseDto>>(manufacturers, true, "正常に取得されました");
-		}
-
 		public async Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetFilterManufacturersAsync(int categoryId)
 		{
-			List<ManufacturerResponseDto> manufacturers = new List<ManufacturerResponseDto>();
-			manufacturers.Add(new ManufacturerResponseDto(0, "すべて"));
-			await _db.Manufacturers.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ForEachAsync(a => manufacturers.Add(new ManufacturerResponseDto(a.Id, a.Name)));
+			IEnumerable<ManufacturerResponseDto> manufacturers = (await _db.Manufacturers.Include(a => a.TeamInformations)
+				.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync())
+				.Select(a => new ManufacturerResponseDto(a.Id, a.Name));
 			return new ServiceResponse<IEnumerable<ManufacturerResponseDto>>(manufacturers, true, "正常に取得されました");
 		}
-
 
 		public async Task<ServiceResponse<bool>> SaveManufacturer(ManufacturerRequestDto manufacturerRequestDto)
 		{
@@ -34,7 +24,10 @@ namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 			}
 			Manufacturer _manufacturer = await _db.Manufacturers.FindAsync(manufacturerRequestDto.Id) ?? new Manufacturer();
 			_manufacturer.Name = manufacturerRequestDto.Name;
-			if (_manufacturer.Id == 0) _db.Manufacturers.Add(_manufacturer);
+			if (_manufacturer.Id == 0)
+			{
+				_db.Manufacturers.Add(_manufacturer);
+			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}

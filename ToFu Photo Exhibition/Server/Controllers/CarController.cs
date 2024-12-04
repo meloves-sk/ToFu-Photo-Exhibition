@@ -10,12 +10,6 @@
 			_carService = carService;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetCars()
-		{
-			return Ok(await _carService.GetCarsAsync());
-		}
-
 		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}")]
 		public async Task<ActionResult<ServiceResponse<IEnumerable<CarResponseDto>>>> GetFilterCars(int categoryId, int manufacturerId, int teamId)
 		{

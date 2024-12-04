@@ -10,18 +10,10 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 			_db = db;
 		}
 
-		public async Task<ServiceResponse<IEnumerable<RoundResponseDto>>> GetRoundsAsync()
-		{
-			List<RoundResponseDto> rounds = new List<RoundResponseDto>();
-			await _db.Rounds.ForEachAsync(a => rounds.Add(new RoundResponseDto(a.Id, a.Name)));
-			return new ServiceResponse<IEnumerable<RoundResponseDto>>(rounds, true, "正常に取得されました");
-		}
-
 		public async Task<ServiceResponse<IEnumerable<RoundResponseDto>>> GetFilterRoundsAsync(int categoryId)
 		{
-			List<RoundResponseDto> rounds = new List<RoundResponseDto>();
-			rounds.Add(new RoundResponseDto(0, "すべて"));
-			await _db.Rounds.Where(a => a.CategoryId == categoryId).ForEachAsync(a => rounds.Add(new RoundResponseDto(a.Id, a.Name)));
+			IEnumerable<RoundResponseDto> rounds = (await _db.Rounds.Where(a => a.CategoryId == categoryId)
+				.ToListAsync()).Select(a => new RoundResponseDto(a.Id, a.Name));
 			return new ServiceResponse<IEnumerable<RoundResponseDto>>(rounds, true, "正常に取得されました");
 		}
 
@@ -34,7 +26,10 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 			Round round = await _db.Rounds.FindAsync(roundRequestDto.Id) ?? new Round();
 			round.Name = round.Name;
 			round.CategoryId = roundRequestDto.CategoryId;
-			if (round.Id == 0) _db.Rounds.Add(round);
+			if (round.Id == 0)
+			{
+				_db.Rounds.Add(round);
+			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}

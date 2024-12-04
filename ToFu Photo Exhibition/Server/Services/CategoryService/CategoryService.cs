@@ -9,8 +9,8 @@
 		}
 		public async Task<ServiceResponse<IEnumerable<CategoryResponseDto>>> GetCategoriesAsync()
 		{
-			List<CategoryResponseDto> categories = new List<CategoryResponseDto>();
-			await _db.Categories.ForEachAsync(a => categories.Add(new CategoryResponseDto(a.Id, a.Name)));
+			IEnumerable<CategoryResponseDto> categories = (await _db.Categories.ToListAsync())
+				.Select(a => new CategoryResponseDto(a.Id, a.Name));
 			return new ServiceResponse<IEnumerable<CategoryResponseDto>>(categories, true, "正常に取得されました");
 		}
 	}

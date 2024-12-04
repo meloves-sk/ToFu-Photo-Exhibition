@@ -10,30 +10,13 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 		{
 			_db = db;
 		}
-
-		public async Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetCarsAsync()
-		{
-
-			List<CarResponseDto> cars = new List<CarResponseDto>();
-			await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
-				.Include(a => a.TeamInformation).ThenInclude(a => a.Manufacturer)
-				.Include(a => a.TeamInformation).ThenInclude(a => a.Category).ForEachAsync(a =>
-			{
-				cars.Add(new CarResponseDto(a.Id, a.Name, a.CarNo, a.TeamInformationId, a.TeamInformation.Team.Name, a.TeamInformation.Manufacturer.Name, a.TeamInformation.Category.Name));
-			});
-			return new ServiceResponse<IEnumerable<CarResponseDto>>(cars, true, "正常に取得されました");
-		}
-
 		public async Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetFilterCarsAsync(int categoryId, int manufacturerId, int teamId)
 		{
-			List<CarResponseDto> cars = new List<CarResponseDto>();
-			cars.Add(new CarResponseDto(0, "すべて", 0, 0, string.Empty, string.Empty, string.Empty));
-			Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
+			IEnumerable<CarResponseDto> cars = Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
 				.Include(a => a.TeamInformation).ThenInclude(a => a.Manufacturer)
-				.Include(a => a.TeamInformation).ThenInclude(a => a.Category).Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId).ForEach(a =>
-			{
-				cars.Add(new CarResponseDto(a.Id, a.Name, a.CarNo, a.TeamInformationId, a.TeamInformation.Team.Name, a.TeamInformation.Manufacturer.Name, a.TeamInformation.Category.Name));
-			});
+				.Include(a => a.TeamInformation).ThenInclude(a => a.Category)
+				.Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId)
+				.Select(a => new CarResponseDto(a.Id, a.Name, a.CarNo, a.TeamInformationId, a.TeamInformation.Team.Name, a.TeamInformation.Manufacturer.Name, a.TeamInformation.Category.Name));
 			return new ServiceResponse<IEnumerable<CarResponseDto>>(cars, true, "正常に取得されました");
 		}
 
@@ -47,15 +30,24 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 			car.Name = carRequestDto.Name;
 			car.CarNo = carRequestDto.CarNo;
 			car.TeamInformationId = carRequestDto.TeamInformationId;
-			if (car.Id == 0) _db.Cars.Add(car);
+			if (car.Id == 0)
+			{
+				_db.Cars.Add(car);
+			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 
 		private List<Car> Filter(List<Car> cars, int manufacturerId, int teamId)
 		{
-			if (manufacturerId != 0) return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId).ToList(), 0, teamId);
-			if (teamId != 0) return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId).ToList(), manufacturerId, 0);
+			if (manufacturerId != 0)
+			{
+				return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId).ToList(), 0, teamId);
+			}
+			if (teamId != 0)
+			{
+				return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId).ToList(), manufacturerId, 0);
+			}
 			return cars;
 		}
 	}

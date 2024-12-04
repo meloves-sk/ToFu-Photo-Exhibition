@@ -3,8 +3,7 @@
 }
 
 .img {
-    display: block;
-    width: 220px;
+    width: 100px;
 }
 
 .nav-item:first-of-type {
@@ -47,6 +46,9 @@
 
 
 @media (min-width: 641px) {
+    .img {
+        width: 220px;
+    }
     .navbar-toggler {
         display: none;
     }
