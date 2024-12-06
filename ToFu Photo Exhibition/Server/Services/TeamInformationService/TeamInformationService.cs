@@ -7,10 +7,20 @@
 		{
 			_db = db;
 		}
-		public async Task<ServiceResponse<IEnumerable<TeamInformationResponseDto>>> GetTeamInformationsAsync()
+		public async Task<ServiceResponse<IEnumerable<TeamInformationResponseDto>>> GetTeamInformationsAsync(int teamId, int manufacturerId, int categoryId)
 		{
-			IEnumerable<TeamInformationResponseDto> teamInformations = (await _db.TeamInformations.Include(a => a.Manufacturer).Include(a => a.Team).Include(a => a.Category).ToListAsync())
-				.Select(a => new TeamInformationResponseDto(a.Id, a.TeamId, a.ManufacturerId, a.CategoryId, a.Team.Name, a.Manufacturer.Name, a.Category.Name));
+			var filterTeamInformations = Filter(await _db.TeamInformations.Include(a => a.Team)
+				.Include(a => a.Manufacturer).Include(a => a.Category).ToListAsync(),
+				teamId, manufacturerId, categoryId);
+			IEnumerable<TeamInformationResponseDto> teamInformations = filterTeamInformations.Select(a => 
+			new TeamInformationResponseDto(
+				a.Id,
+				a.TeamId,
+				a.ManufacturerId,
+				a.CategoryId,
+				a.Team.Name,
+				a.Manufacturer.Name,
+				a.Category.Name));
 			return new ServiceResponse<IEnumerable<TeamInformationResponseDto>>(teamInformations, true, "正常に取得されました");
 		}
 
@@ -30,6 +40,23 @@
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		private List<TeamInformation> Filter(List<TeamInformation> teamInformations, int teamId, int manufacturerId, int categoryId)
+		{
+			if (teamId != 0)
+			{
+				return Filter(teamInformations.Where(a => a.TeamId == teamId).ToList(), 0, manufacturerId, categoryId);
+			}
+			if (manufacturerId != 0)
+			{
+				return Filter(teamInformations.Where(a => a.ManufacturerId == manufacturerId).ToList(), teamId, 0, categoryId);
+			}
+			if (categoryId != 0)
+			{
+				return Filter(teamInformations.Where(a => a.CategoryId == categoryId).ToList(), teamId, manufacturerId, 0);
+			}
+			return teamInformations;
 		}
 	}
 }

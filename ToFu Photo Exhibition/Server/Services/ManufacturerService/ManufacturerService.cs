@@ -10,9 +10,11 @@
 
 		public async Task<ServiceResponse<IEnumerable<ManufacturerResponseDto>>> GetFilterManufacturersAsync(int categoryId)
 		{
-			IEnumerable<ManufacturerResponseDto> manufacturers = (await _db.Manufacturers.Include(a => a.TeamInformations)
-				.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync())
-				.Select(a => new ManufacturerResponseDto(a.Id, a.Name));
+			var filterManufacturers = Filter(await _db.Manufacturers.Include(a => a.TeamInformations).ToListAsync(), categoryId);
+			IEnumerable<ManufacturerResponseDto> manufacturers = filterManufacturers.Select(a =>
+				 new ManufacturerResponseDto(
+					 a.Id,
+					 a.Name));
 			return new ServiceResponse<IEnumerable<ManufacturerResponseDto>>(manufacturers, true, "正常に取得されました");
 		}
 
@@ -30,6 +32,15 @@
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		private List<Manufacturer> Filter(List<Manufacturer> manufacturers, int categoryId)
+		{
+			if (categoryId != 0)
+			{
+				return Filter(manufacturers.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToList(), 0);
+			}
+			return manufacturers;
 		}
 	}
 }

@@ -12,8 +12,11 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 
 		public async Task<ServiceResponse<IEnumerable<RoundResponseDto>>> GetFilterRoundsAsync(int categoryId)
 		{
-			IEnumerable<RoundResponseDto> rounds = (await _db.Rounds.Where(a => a.CategoryId == categoryId)
-				.ToListAsync()).Select(a => new RoundResponseDto(a.Id, a.Name));
+			var filterRounds = Filter(await _db.Rounds.ToListAsync(), categoryId);
+			IEnumerable<RoundResponseDto> rounds = filterRounds.Select(a =>
+			new RoundResponseDto(
+				a.Id,
+				a.Name));
 			return new ServiceResponse<IEnumerable<RoundResponseDto>>(rounds, true, "正常に取得されました");
 		}
 
@@ -32,6 +35,15 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		private List<Round> Filter(List<Round> rounds, int categoryId)
+		{
+			if (categoryId != 0)
+			{
+				return Filter(rounds.Where(a => a.CategoryId == categoryId).ToList(), 0);
+			}
+			return rounds;
 		}
 	}
 }

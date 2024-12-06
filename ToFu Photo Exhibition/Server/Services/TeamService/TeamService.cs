@@ -12,8 +12,11 @@ namespace ToFu_Photo_Exhibition.Server.Services.TeamService
 
 		public async Task<ServiceResponse<IEnumerable<TeamResponseDto>>> GetFilterTeamsAsync(int categoryId, int manufacturerId)
 		{
-			IEnumerable<TeamResponseDto> teams = Filter(await _db.Teams.Include(a => a.TeamInformations).Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToListAsync(), manufacturerId)
-				.Select(a => new TeamResponseDto(a.Id, a.Name));
+			var filterTeams = Filter(await _db.Teams.Include(a => a.TeamInformations).ToListAsync(), categoryId, manufacturerId);
+			IEnumerable<TeamResponseDto> teams = filterTeams.Select(a =>
+			new TeamResponseDto(
+				a.Id,
+				a.Name));
 			return new ServiceResponse<IEnumerable<TeamResponseDto>>(teams, true, "正常に取得されました");
 		}
 
@@ -33,11 +36,15 @@ namespace ToFu_Photo_Exhibition.Server.Services.TeamService
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 
-		private List<Team> Filter(List<Team> teams, int manufacturerId)
+		private List<Team> Filter(List<Team> teams, int categoryId, int manufacturerId)
 		{
+			if (categoryId != 0)
+			{
+				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToList(), 0, manufacturerId);
+			}
 			if (manufacturerId != 0)
 			{
-				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.ManufacturerId == manufacturerId)).ToList(), 0);
+				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.ManufacturerId == manufacturerId)).ToList(), categoryId, 0);
 			}
 			return teams;
 		}

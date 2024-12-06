@@ -10,10 +10,10 @@
 			_teamInformationService = teamInformationService;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamInformationResponseDto>>>> GetTeamInformations()
+		[HttpGet("category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}")]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<TeamInformationResponseDto>>>> GetTeamInformations(int categoryId, int manufacturerId, int teamId)
 		{
-			return Ok(await _teamInformationService.GetTeamInformationsAsync());
+			return Ok(await _teamInformationService.GetTeamInformationsAsync(teamId, manufacturerId, categoryId));
 		}
 
 		[HttpPost]

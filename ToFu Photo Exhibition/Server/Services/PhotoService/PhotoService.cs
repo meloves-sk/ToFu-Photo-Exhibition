@@ -9,11 +9,22 @@
 		}
 		public async Task<ServiceResponse<IEnumerable<PhotoResponseDto>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
-			IEnumerable<PhotoResponseDto> photos = Filter(await _db.Photos.Include(a => a.Round).ThenInclude(a => a.Category)
+			var filterPhotos = Filter(await _db.Photos.Include(a => a.Round).ThenInclude(a => a.Category)
 				.Include(a => a.Car).ThenInclude(a => a.TeamInformation).ThenInclude(a => a.Team)
-				.Include(a => a.Car).ThenInclude(a => a.TeamInformation).ThenInclude(a => a.Manufacturer)
-				.Where(a => a.Round.CategoryId == categoryId).ToListAsync(), roundId, manufacturerId, teamId, carId)
-				.Select(a => new PhotoResponseDto(a.Id, a.FilePath, a.Description, a.RoundId, a.CarId, a.Round.Name, a.Round.Category.Name, a.Car.Name, a.Car.CarNo, a.Car.TeamInformation.Team.Name, a.Car.TeamInformation.Manufacturer.Name));
+				.Include(a => a.Car).ThenInclude(a => a.TeamInformation).ThenInclude(a => a.Manufacturer).ToListAsync(),
+				categoryId, roundId, manufacturerId, teamId, carId);
+			IEnumerable<PhotoResponseDto> photos = filterPhotos.Select(a =>
+			new PhotoResponseDto(
+					a.Id,
+					a.FilePath,
+					a.Description,
+					a.RoundId,
+					a.CarId,
+					a.Round.Name,
+					a.Round.Category.Name,
+					a.Car.Name, a.Car.CarNo,
+					a.Car.TeamInformation.Team.Name,
+					a.Car.TeamInformation.Manufacturer.Name));
 			return new ServiceResponse<IEnumerable<PhotoResponseDto>>(photos, true, "正常に取得されました");
 		}
 
@@ -35,23 +46,27 @@
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 
-		private List<Photo> Filter(List<Photo> photos, int roundId, int manufacturerId, int teamId, int carId)
+		private List<Photo> Filter(List<Photo> photos, int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
+			if (categoryId != 0)
+			{
+				return Filter(photos.Where(a => a.Round.CategoryId == categoryId).ToList(), 0, roundId, manufacturerId, teamId, carId);
+			}
 			if (roundId != 0)
 			{
-				return Filter(photos.Where(a => a.RoundId == roundId).ToList(), 0, manufacturerId, teamId, carId);
+				return Filter(photos.Where(a => a.RoundId == roundId).ToList(), categoryId, 0, manufacturerId, teamId, carId);
 			}
 			if (manufacturerId != 0)
 			{
-				return Filter(photos.Where(a => a.Car.TeamInformation.ManufacturerId == manufacturerId).ToList(), roundId, 0, teamId, carId);
+				return Filter(photos.Where(a => a.Car.TeamInformation.ManufacturerId == manufacturerId).ToList(), categoryId, roundId, 0, teamId, carId);
 			}
 			if (teamId != 0)
 			{
-				return Filter(photos.Where(a => a.Car.TeamInformation.TeamId == teamId).ToList(), roundId, manufacturerId, 0, carId);
+				return Filter(photos.Where(a => a.Car.TeamInformation.TeamId == teamId).ToList(), categoryId, roundId, manufacturerId, 0, carId);
 			}
 			if (carId != 0)
 			{
-				return Filter(photos.Where(a => a.CarId == carId).ToList(), roundId, manufacturerId, teamId, 0);
+				return Filter(photos.Where(a => a.CarId == carId).ToList(), categoryId, roundId, manufacturerId, teamId, 0);
 			}
 			return photos;
 		}

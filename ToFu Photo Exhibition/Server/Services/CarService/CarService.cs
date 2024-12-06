@@ -12,11 +12,19 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 		}
 		public async Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetFilterCarsAsync(int categoryId, int manufacturerId, int teamId)
 		{
-			IEnumerable<CarResponseDto> cars = Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
+			var filterCars = Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
 				.Include(a => a.TeamInformation).ThenInclude(a => a.Manufacturer)
 				.Include(a => a.TeamInformation).ThenInclude(a => a.Category)
-				.Where(a => a.TeamInformation.CategoryId == categoryId).ToListAsync(), manufacturerId, teamId)
-				.Select(a => new CarResponseDto(a.Id, a.Name, a.CarNo, a.TeamInformationId, a.TeamInformation.Team.Name, a.TeamInformation.Manufacturer.Name, a.TeamInformation.Category.Name));
+				.ToListAsync(), categoryId, manufacturerId, teamId);
+			IEnumerable<CarResponseDto> cars = filterCars.Select(a =>
+			new CarResponseDto(
+				a.Id,
+				a.Name,
+				a.CarNo,
+				a.TeamInformationId,
+				a.TeamInformation.Team.Name,
+				a.TeamInformation.Manufacturer.Name,
+				a.TeamInformation.Category.Name));
 			return new ServiceResponse<IEnumerable<CarResponseDto>>(cars, true, "正常に取得されました");
 		}
 
@@ -38,15 +46,19 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 
-		private List<Car> Filter(List<Car> cars, int manufacturerId, int teamId)
+		private List<Car> Filter(List<Car> cars, int categoryId, int manufacturerId, int teamId)
 		{
+			if (categoryId != 0)
+			{
+				return Filter(cars.Where(a => a.TeamInformation.CategoryId == categoryId).ToList(), 0, manufacturerId, teamId);
+			}
 			if (manufacturerId != 0)
 			{
-				return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId).ToList(), 0, teamId);
+				return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId).ToList(), categoryId, 0, teamId);
 			}
 			if (teamId != 0)
 			{
-				return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId).ToList(), manufacturerId, 0);
+				return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId).ToList(), categoryId, manufacturerId, 0);
 			}
 			return cars;
 		}
