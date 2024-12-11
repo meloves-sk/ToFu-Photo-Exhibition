@@ -7,6 +7,7 @@
 		{
 			_db = db;
 		}
+
 		public async Task<ServiceResponse<IEnumerable<PhotoResponseDto>>> GetPhotosAsync(int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
 			var filterPhotos = Filter(await _db.Photos.Include(a => a.Round).ThenInclude(a => a.Category)
@@ -31,8 +32,7 @@
 		public async Task<ServiceResponse<bool>> SavePhoto(PhotoRequestDto photoRequestDto)
 		{
 			Photo photo = await _db.Photos.FindAsync(photoRequestDto.Id) ?? new Photo();
-			int id = photo.Id == 0 ? await _db.Photos.MaxAsync(a => a.Id) + 1 : photo.Id;
-			string filename = $"tofu_photo_image{id}.png";
+			string filename = $"image{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
 			photo.FilePath = $"images/{filename}";
 			photo.Description = photoRequestDto.Description;
 			photo.RoundId = photoRequestDto.RoundId;
@@ -42,8 +42,16 @@
 				_db.Photos.Add(photo);
 			}
 			await _db.SaveChangesAsync();
-			await File.WriteAllBytesAsync($".../wwwroot/Images/{filename}", photoRequestDto.PhotoData);
+			await File.WriteAllBytesAsync($"wwwroot/Images/{filename}", photoRequestDto.PhotoData);
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+		public async Task<ServiceResponse<bool>> DeletePhoto(int photoId)
+		{
+			var photo = await _db.Photos.FindAsync(photoId);
+			File.Delete($"wwwroot/{photo.FilePath}");
+			_db.Photos.Remove(photo);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
 		private List<Photo> Filter(List<Photo> photos, int categoryId, int roundId, int manufacturerId, int teamId, int carId)

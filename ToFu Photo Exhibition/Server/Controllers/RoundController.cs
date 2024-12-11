@@ -33,5 +33,16 @@ namespace ToFu_Photo_Exhibition.Server.Controllers
 			if (!response.Success) return BadRequest(response);
 			return Ok(response);
 		}
+
+		[HttpDelete("{roundId}")]
+		public async Task<ActionResult<ServiceResponse<bool>>> DeleteRound(int roundId)
+		{
+			var response = await _roundService.DeleteRound(roundId);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+			return Ok(response);
+		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
+﻿using ToFu_Photo_Exhibition.Shared.Models;
+
+namespace ToFu_Photo_Exhibition.Server.Services.ManufacturerService
 {
 	public class ManufacturerService : IManufacturerService
 	{
@@ -32,6 +34,17 @@
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+		public async Task<ServiceResponse<bool>> DeleteManufacturer(int manufacturerId)
+		{
+			var manufacturer = await _db.Manufacturers.FindAsync(manufacturerId);
+			if (manufacturer.TeamInformations.Any())
+			{
+				return new ServiceResponse<bool>(false, false, "このメーカーは使用されています");
+			}
+			_db.Manufacturers.Remove(manufacturer);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
 		private List<Manufacturer> Filter(List<Manufacturer> manufacturers, int categoryId)

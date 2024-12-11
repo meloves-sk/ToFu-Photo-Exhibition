@@ -1,5 +1,4 @@
-﻿
-namespace ToFu_Photo_Exhibition.Client.Services.TeamService
+﻿namespace ToFu_Photo_Exhibition.Client.Services.TeamService
 {
 	public class TeamService : ITeamService
 	{
@@ -13,10 +12,10 @@ namespace ToFu_Photo_Exhibition.Client.Services.TeamService
 		public async Task GetFilterTeams(int categoryId, int manufacturerId)
 		{
 			Teams.Clear();
-			Teams.Add(new TeamResponseDto(0, "ALL"));
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<TeamResponseDto>>>($"api/team/category/{categoryId}/manufacturer/{manufacturerId}");
 			if (result != null && result.Data != null)
 			{
+				Teams.Add(new TeamResponseDto(0, "ALL"));
 				Teams.AddRange(result.Data);
 			}
 		}

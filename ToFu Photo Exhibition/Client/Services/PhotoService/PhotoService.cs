@@ -1,5 +1,4 @@
-﻿
-namespace ToFu_Photo_Exhibition.Client.Services.PhotoService
+﻿namespace ToFu_Photo_Exhibition.Client.Services.PhotoService
 {
 	public class PhotoService : IPhotoService
 	{

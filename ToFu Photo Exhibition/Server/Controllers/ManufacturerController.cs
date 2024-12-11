@@ -20,7 +20,10 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> RegisterManufacturer([FromBody] ManufacturerRequestDto manufacturerRequestDto)
 		{
 			var response = await _manufacturerService.SaveManufacturer(manufacturerRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
 
@@ -28,8 +31,23 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> UpdateManufacturer([FromBody] ManufacturerRequestDto manufacturerRequestDto)
 		{
 			var response = await _manufacturerService.SaveManufacturer(manufacturerRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
+
+		[HttpDelete("{manufacturerId}")]
+		public async Task<ActionResult<ServiceResponse<bool>>> DeleteManufacturer(int manufacturerId)
+		{
+			var response = await _manufacturerService.DeleteManufacturer(manufacturerId);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+			return Ok(response);
+		}
+
 	}
 }

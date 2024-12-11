@@ -1,6 +1,4 @@
-﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
-
-namespace ToFu_Photo_Exhibition.Server.Services.TeamService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.TeamService
 {
 	public class TeamService : ITeamService
 	{
@@ -34,6 +32,18 @@ namespace ToFu_Photo_Exhibition.Server.Services.TeamService
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		public async Task<ServiceResponse<bool>> DeleteTeam(int teamId)
+		{
+			var team = await _db.Teams.FindAsync(teamId);
+			if (team.TeamInformations.Any())
+			{
+				return new ServiceResponse<bool>(false, false, "このチームは使用されています");
+			}
+			_db.Teams.Remove(team);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
 		private List<Team> Filter(List<Team> teams, int categoryId, int manufacturerId)

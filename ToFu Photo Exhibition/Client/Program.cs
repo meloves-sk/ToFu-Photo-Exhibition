@@ -2,6 +2,7 @@ global using ToFu_Photo_Exhibition.Shared;
 global using ToFu_Photo_Exhibition.Shared.Models;
 global using System.Net.Http.Json;
 global using ToFu_Photo_Exhibition.Shared.Dto.Response;
+global using ToFu_Photo_Exhibition.Shared.Dto.Request;
 global using ToFu_Photo_Exhibition.Client;
 global using ToFu_Photo_Exhibition.Client.Services.RoundService;
 global using ToFu_Photo_Exhibition.Client.Services.ManufacturerService;

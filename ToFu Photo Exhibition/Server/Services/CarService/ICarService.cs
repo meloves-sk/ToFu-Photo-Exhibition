@@ -1,10 +1,9 @@
-﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
-
-namespace ToFu_Photo_Exhibition.Server.Services.CarService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.CarService
 {
-    public interface ICarService
+	public interface ICarService
 	{
 		Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetFilterCarsAsync(int categoryId, int manufacturerId, int teamId);
 		Task<ServiceResponse<bool>> SaveCar(CarRequestDto carRequestDto);
+		Task<ServiceResponse<bool>> DeleteCar(int carId);
 	}
 }

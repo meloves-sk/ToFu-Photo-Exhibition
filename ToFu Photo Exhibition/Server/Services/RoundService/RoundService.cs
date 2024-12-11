@@ -1,4 +1,4 @@
-﻿using ToFu_Photo_Exhibition.Shared.Dto.Request;
+﻿using ToFu_Photo_Exhibition.Shared.Models;
 
 namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 {
@@ -37,6 +37,17 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 
+		public async Task<ServiceResponse<bool>> DeleteRound(int roundId)
+		{
+			var round = await _db.Rounds.FindAsync(roundId);
+			if (round.Photos.Any())
+			{
+				return new ServiceResponse<bool>(false, false, "このラウンドは使用されています");
+			}
+			_db.Rounds.Remove(round);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
+		}
 		private List<Round> Filter(List<Round> rounds, int categoryId)
 		{
 			if (categoryId != 0)

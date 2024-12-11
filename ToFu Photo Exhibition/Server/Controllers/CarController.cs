@@ -20,7 +20,10 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> RegisterCar([FromBody] CarRequestDto carRequestDto)
 		{
 			var response = await _carService.SaveCar(carRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
 
@@ -28,7 +31,21 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> UpdateCar([FromBody] CarRequestDto carRequestDto)
 		{
 			var response = await _carService.SaveCar(carRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+			return Ok(response);
+		}
+
+		[HttpDelete("{carId}")]
+		public async Task<ActionResult<ServiceResponse<bool>>> DeleteCar(int carId)
+		{
+			var response = await _carService.DeleteCar(carId);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
 	}

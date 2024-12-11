@@ -1,5 +1,4 @@
-﻿
-namespace ToFu_Photo_Exhibition.Client.Services.CarService
+﻿namespace ToFu_Photo_Exhibition.Client.Services.CarService
 {
 	public class CarService : ICarService
 	{
@@ -13,10 +12,10 @@ namespace ToFu_Photo_Exhibition.Client.Services.CarService
 		public async Task GetFilterCars(int categoryId, int manufacturerId, int teamId)
 		{
 			Cars.Clear();
-			Cars.Add(new CarResponseDto(0, "ALL", 0, 0, string.Empty, string.Empty, string.Empty));
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<CarResponseDto>>>($"api/car/category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}");
 			if (result != null && result.Data != null)
 			{
+				Cars.Add(new CarResponseDto(0, "ALL", 0, 0, string.Empty, string.Empty, string.Empty));
 				Cars.AddRange(result.Data);
 			}
 		}

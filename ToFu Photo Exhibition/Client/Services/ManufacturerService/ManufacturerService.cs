@@ -13,10 +13,10 @@ namespace ToFu_Photo_Exhibition.Client.Services.ManufacturerService
 		public async Task GetFilterManufacturers(int categoryId)
 		{
 			Manufacturers.Clear();
-			Manufacturers.Add(new ManufacturerResponseDto(0, "ALL"));
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<ManufacturerResponseDto>>>($"api/manufacturer/category/{categoryId}");
 			if (result != null && result.Data != null)
 			{
+				Manufacturers.Add(new ManufacturerResponseDto(0, "ALL"));
 				Manufacturers.AddRange(result.Data);
 			}
 		}

@@ -20,7 +20,10 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> RegisterTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
 			var response = await _teamService.SaveTeam(teamRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
 
@@ -28,7 +31,21 @@
 		public async Task<ActionResult<ServiceResponse<bool>>> UpdateTeam([FromBody] TeamRequestDto teamRequestDto)
 		{
 			var response = await _teamService.SaveTeam(teamRequestDto);
-			if (!response.Success) return BadRequest(response);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+			return Ok(response);
+		}
+
+		[HttpDelete("{teamId}")]
+		public async Task<ActionResult<ServiceResponse<bool>>> DeleteTeam(int teamId)
+		{
+			var response = await _teamService.DeleteTeam(teamId);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
 			return Ok(response);
 		}
 	}

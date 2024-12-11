@@ -12,7 +12,7 @@
 			var filterTeamInformations = Filter(await _db.TeamInformations.Include(a => a.Team)
 				.Include(a => a.Manufacturer).Include(a => a.Category).ToListAsync(),
 				teamId, manufacturerId, categoryId);
-			IEnumerable<TeamInformationResponseDto> teamInformations = filterTeamInformations.Select(a => 
+			IEnumerable<TeamInformationResponseDto> teamInformations = filterTeamInformations.Select(a =>
 			new TeamInformationResponseDto(
 				a.Id,
 				a.TeamId,
@@ -40,6 +40,18 @@
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		public async Task<ServiceResponse<bool>> DeleteTeamInformation(int teamInformationId)
+		{
+			var teamInformation = await _db.TeamInformations.FindAsync(teamInformationId);
+			if (teamInformation.Cars.Any())
+			{
+				return new ServiceResponse<bool>(false, false, "このチーム情報は使用されています");
+			}
+			_db.TeamInformations.Remove(teamInformation);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
 		private List<TeamInformation> Filter(List<TeamInformation> teamInformations, int teamId, int manufacturerId, int categoryId)

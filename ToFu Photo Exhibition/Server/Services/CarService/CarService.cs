@@ -1,7 +1,4 @@
-﻿
-using ToFu_Photo_Exhibition.Shared.Dto.Request;
-
-namespace ToFu_Photo_Exhibition.Server.Services.CarService
+﻿namespace ToFu_Photo_Exhibition.Server.Services.CarService
 {
 	public class CarService : ICarService
 	{
@@ -10,6 +7,7 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 		{
 			_db = db;
 		}
+
 		public async Task<ServiceResponse<IEnumerable<CarResponseDto>>> GetFilterCarsAsync(int categoryId, int manufacturerId, int teamId)
 		{
 			var filterCars = Filter(await _db.Cars.Include(a => a.TeamInformation).ThenInclude(a => a.Team)
@@ -44,6 +42,18 @@ namespace ToFu_Photo_Exhibition.Server.Services.CarService
 			}
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
+		}
+
+		public async Task<ServiceResponse<bool>> DeleteCar(int carId)
+		{
+			var car = await _db.Cars.FindAsync(carId);
+			if (car.Photos.Any())
+			{
+				return new ServiceResponse<bool>(false, false, "この車両は使用されています");
+			}
+			_db.Cars.Remove(car);
+			await _db.SaveChangesAsync();
+			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
 		private List<Car> Filter(List<Car> cars, int categoryId, int manufacturerId, int teamId)
