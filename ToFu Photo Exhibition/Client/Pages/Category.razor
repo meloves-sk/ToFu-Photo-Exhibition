@@ -1,0 +1,121 @@
+﻿@page "/category/{id:int}/{name}"
+@inject IRoundService RoundService;
+@inject IManufacturerService ManufacturerService;
+@inject ITeamService TeamService;
+@inject ICarService CarService;
+@inject IPhotoService PhotoService;
+<div class="category-content">
+	<div class="filter">
+		<div class="box round">
+			<p>Round</p>
+			<select class="form-select">
+				@foreach (var round in RoundService.Rounds)
+				{
+					<option value="@round.Id">@round.Name</option>
+				}
+			</select>
+		</div>
+		<div class="box manufacturer">
+			<p>Manufacturer</p>
+			<select class="form-select" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
+				@foreach (var manufacturer in ManufacturerService.Manufacturers)
+				{
+					<option value="@manufacturer.Id">@manufacturer.Name</option>
+				}
+			</select>
+		</div>
+		<div class="box team">
+			<p>Team</p>
+			<select class="form-select" value="@teamId" @onchange="(e => TeamChanged(e.Value.ToString()))">
+				@foreach (var team in TeamService.Teams)
+				{
+					<option value="@team.Id">@team.Name</option>
+				}
+			</select>
+		</div>
+		<div class="box car">
+			<p>Car</p>
+			<select class="form-select" value="@carId" @onchange="(e => CarChanged(e.Value.ToString()))">
+				@foreach (var car in CarService.Cars)
+				{
+					<option value="@car.Id">@car.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="gallery">
+		@foreach (var photo in PhotoService.Photos)
+		{
+			<div class="photo-content">
+				<div class="photo-header">
+					No.@photo.CarNo @photo.Car
+				</div>
+				<img src="@photo.FilePath" alt="@photo.Car" />
+			</div>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	[Parameter]
+	public string Name { get; set; }
+	private int roundId = 0;
+	private int manufacturerId = 0;
+	private int teamId = 0;
+	private int carId = 0;
+	protected override async Task OnParametersSetAsync()
+	{
+		await RoundService.GetFilterRounds(Id);
+		await ManufacturerService.GetFilterManufacturers(Id);
+		await LoadTeams();
+		await LoadCars();
+		await LoadPhotos();
+	}
+
+	private async Task LoadTeams()
+	{
+		await TeamService.GetFilterTeams(Id, manufacturerId);
+	}
+
+	private async Task LoadCars()
+	{
+		await CarService.GetFilterCars(Id, manufacturerId, teamId);
+	}
+
+	private async Task LoadPhotos()
+	{
+		await PhotoService.GetFilterPhotos(Id, roundId, manufacturerId, teamId, carId);
+	}
+
+	private async Task RoundChanged(string value)
+	{
+		roundId = int.Parse(value);
+		await LoadPhotos();
+	}
+
+	private async Task ManufacturerChanged(string value)
+	{
+		manufacturerId = int.Parse(value);
+		teamId = 0;
+		carId = 0;
+		await LoadTeams();
+		await LoadCars();
+		await LoadPhotos();
+	}
+
+	private async Task TeamChanged(string value)
+	{
+		teamId = int.Parse(value);
+		carId = 0;
+		await LoadCars();
+		await LoadPhotos();
+	}
+
+	private async Task CarChanged(string value)
+	{
+		carId = int.Parse(value);
+		await LoadPhotos();
+	}
+}
