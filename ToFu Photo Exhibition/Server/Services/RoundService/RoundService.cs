@@ -48,11 +48,11 @@ namespace ToFu_Photo_Exhibition.Server.Services.RoundService
 			await _db.SaveChangesAsync();
 			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
-		private List<Round> Filter(List<Round> rounds, int categoryId)
+		private IEnumerable<Round> Filter(IEnumerable<Round> rounds, int categoryId)
 		{
 			if (categoryId != 0)
 			{
-				return Filter(rounds.Where(a => a.CategoryId == categoryId).ToList(), 0);
+				return Filter(rounds.Where(a => a.CategoryId == categoryId), 0);
 			}
 			return rounds;
 		}

@@ -45,11 +45,11 @@
 			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
-		private List<Manufacturer> Filter(List<Manufacturer> manufacturers, int categoryId)
+		private IEnumerable<Manufacturer> Filter(IEnumerable<Manufacturer> manufacturers, int categoryId)
 		{
 			if (categoryId != 0)
 			{
-				return Filter(manufacturers.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToList(), 0);
+				return Filter(manufacturers.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)), 0);
 			}
 			return manufacturers;
 		}

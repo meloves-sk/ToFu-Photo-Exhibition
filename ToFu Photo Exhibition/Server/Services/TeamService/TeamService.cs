@@ -46,15 +46,15 @@
 			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
-		private List<Team> Filter(List<Team> teams, int categoryId, int manufacturerId)
+		private IEnumerable<Team> Filter(IEnumerable<Team> teams, int categoryId, int manufacturerId)
 		{
 			if (categoryId != 0)
 			{
-				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)).ToList(), 0, manufacturerId);
+				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.CategoryId == categoryId)), 0, manufacturerId);
 			}
 			if (manufacturerId != 0)
 			{
-				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.ManufacturerId == manufacturerId)).ToList(), categoryId, 0);
+				return Filter(teams.Where(a => a.TeamInformations.Any(b => b.ManufacturerId == manufacturerId)), categoryId, 0);
 			}
 			return teams;
 		}

@@ -56,19 +56,19 @@
 			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
-		private List<Car> Filter(List<Car> cars, int categoryId, int manufacturerId, int teamId)
+		private IEnumerable<Car> Filter(IEnumerable<Car> cars, int categoryId, int manufacturerId, int teamId)
 		{
 			if (categoryId != 0)
 			{
-				return Filter(cars.Where(a => a.TeamInformation.CategoryId == categoryId).ToList(), 0, manufacturerId, teamId);
+				return Filter(cars.Where(a => a.TeamInformation.CategoryId == categoryId), 0, manufacturerId, teamId);
 			}
 			if (manufacturerId != 0)
 			{
-				return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId).ToList(), categoryId, 0, teamId);
+				return Filter(cars.Where(a => a.TeamInformation.ManufacturerId == manufacturerId), categoryId, 0, teamId);
 			}
 			if (teamId != 0)
 			{
-				return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId).ToList(), categoryId, manufacturerId, 0);
+				return Filter(cars.Where(a => a.TeamInformation.TeamId == teamId), categoryId, manufacturerId, 0);
 			}
 			return cars;
 		}

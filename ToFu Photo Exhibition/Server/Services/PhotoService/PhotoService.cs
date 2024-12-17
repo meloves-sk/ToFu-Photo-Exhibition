@@ -57,27 +57,27 @@
 			return new ServiceResponse<bool>(true, true, "正常に削除されました");
 		}
 
-		private List<Photo> Filter(List<Photo> photos, int categoryId, int roundId, int manufacturerId, int teamId, int carId)
+		private IEnumerable<Photo> Filter(IEnumerable<Photo> photos, int categoryId, int roundId, int manufacturerId, int teamId, int carId)
 		{
 			if (categoryId != 0)
 			{
-				return Filter(photos.Where(a => a.Round.CategoryId == categoryId).ToList(), 0, roundId, manufacturerId, teamId, carId);
+				return Filter(photos.Where(a => a.Round.CategoryId == categoryId), 0, roundId, manufacturerId, teamId, carId);
 			}
 			if (roundId != 0)
 			{
-				return Filter(photos.Where(a => a.RoundId == roundId).ToList(), categoryId, 0, manufacturerId, teamId, carId);
+				return Filter(photos.Where(a => a.RoundId == roundId), categoryId, 0, manufacturerId, teamId, carId);
 			}
 			if (manufacturerId != 0)
 			{
-				return Filter(photos.Where(a => a.Car.TeamInformation.ManufacturerId == manufacturerId).ToList(), categoryId, roundId, 0, teamId, carId);
+				return Filter(photos.Where(a => a.Car.TeamInformation.ManufacturerId == manufacturerId), categoryId, roundId, 0, teamId, carId);
 			}
 			if (teamId != 0)
 			{
-				return Filter(photos.Where(a => a.Car.TeamInformation.TeamId == teamId).ToList(), categoryId, roundId, manufacturerId, 0, carId);
+				return Filter(photos.Where(a => a.Car.TeamInformation.TeamId == teamId), categoryId, roundId, manufacturerId, 0, carId);
 			}
 			if (carId != 0)
 			{
-				return Filter(photos.Where(a => a.CarId == carId).ToList(), categoryId, roundId, manufacturerId, teamId, 0);
+				return Filter(photos.Where(a => a.CarId == carId), categoryId, roundId, manufacturerId, teamId, 0);
 			}
 			return photos;
 		}
