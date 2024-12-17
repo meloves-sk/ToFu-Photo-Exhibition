@@ -2,8 +2,9 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-image: url("../background.jpg");
-    background-size: cover;
+    /* background-image: url("../background.jpg");
+    background-size: cover;*/
+    background-color: black;
 }
 
 h1:focus {

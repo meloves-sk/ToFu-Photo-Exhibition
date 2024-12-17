@@ -3,6 +3,7 @@
 	public interface IRoundService
 	{
 		List<RoundResponseDto> Rounds { get; }
+		bool IsSearch { get; set; }
 		Task GetFilterRounds(int categoryId);
 	}
 }

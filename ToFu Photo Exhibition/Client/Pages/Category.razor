@@ -5,55 +5,62 @@
 @inject ICarService CarService;
 @inject IPhotoService PhotoService;
 <div class="category-content">
-	<div class="filter">
-		<div class="box round">
-			<p>Round</p>
-			<select class="form-select">
-				@foreach (var round in RoundService.Rounds)
-				{
-					<option value="@round.Id">@round.Name</option>
-				}
-			</select>
-		</div>
-		<div class="box manufacturer">
-			<p>Manufacturer</p>
-			<select class="form-select" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
-				@foreach (var manufacturer in ManufacturerService.Manufacturers)
-				{
-					<option value="@manufacturer.Id">@manufacturer.Name</option>
-				}
-			</select>
-		</div>
-		<div class="box team">
-			<p>Team</p>
-			<select class="form-select" value="@teamId" @onchange="(e => TeamChanged(e.Value.ToString()))">
-				@foreach (var team in TeamService.Teams)
-				{
-					<option value="@team.Id">@team.Name</option>
-				}
-			</select>
-		</div>
-		<div class="box car">
-			<p>Car</p>
-			<select class="form-select" value="@carId" @onchange="(e => CarChanged(e.Value.ToString()))">
-				@foreach (var car in CarService.Cars)
-				{
-					<option value="@car.Id">@car.Name</option>
-				}
-			</select>
-		</div>
-	</div>
-	<div class="gallery">
-		@foreach (var photo in PhotoService.Photos)
-		{
-			<div class="photo-content">
-				<div class="photo-header">
-					No.@photo.CarNo @photo.Car
-				</div>
-				<img src="@photo.FilePath" alt="@photo.Car" />
+	@if (RoundService.IsSearch || ManufacturerService.IsSearch || TeamService.IsSearch || CarService.IsSearch || PhotoService.IsSearch)
+	{
+		<Loader />
+	}
+	else
+	{
+		<div class="filter">
+			<div class="box round">
+				<p>Round</p>
+				<select class="form-select" value="@roundId" @onchange="(e => RoundChanged(e.Value.ToString()))">
+					@foreach (var round in RoundService.Rounds)
+					{
+						<option value="@round.Id">@round.Name</option>
+					}
+				</select>
 			</div>
-		}
-	</div>
+			<div class="box manufacturer">
+				<p>Manufacturer</p>
+				<select class="form-select" value="@manufacturerId" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
+					@foreach (var manufacturer in ManufacturerService.Manufacturers)
+					{
+						<option value="@manufacturer.Id">@manufacturer.Name</option>
+					}
+				</select>
+			</div>
+			<div class="box team">
+				<p>Team</p>
+				<select class="form-select" value="@teamId" @onchange="(e => TeamChanged(e.Value.ToString()))">
+					@foreach (var team in TeamService.Teams)
+					{
+						<option value="@team.Id">@team.Name</option>
+					}
+				</select>
+			</div>
+			<div class="box car">
+				<p>Car</p>
+				<select class="form-select" value="@carId" @onchange="(e => CarChanged(e.Value.ToString()))">
+					@foreach (var car in CarService.Cars)
+					{
+						<option value="@car.Id">@car.Name</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="gallery">
+			@foreach (var photo in PhotoService.Photos)
+			{
+				<div class="photo-content">
+					<div class="photo-header">
+						No.@photo.CarNo @photo.Car
+					</div>
+					<img src="@photo.FilePath" alt="@photo.Car" />
+				</div>
+			}
+		</div>
+	}
 </div>
 
 @code {

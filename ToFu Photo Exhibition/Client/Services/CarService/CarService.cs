@@ -8,15 +8,18 @@
 			_http = http;
 		}
 		public List<CarResponseDto> Cars { get; } = new List<CarResponseDto>();
+		public bool IsSearch { get; set; } = false;
 
 		public async Task GetFilterCars(int categoryId, int manufacturerId, int teamId)
 		{
 			Cars.Clear();
+			IsSearch = true;
 			var result = await _http.GetFromJsonAsync<ServiceResponse<IEnumerable<CarResponseDto>>>($"api/car/category/{categoryId}/manufacturer/{manufacturerId}/team/{teamId}");
 			if (result != null && result.Data != null)
 			{
 				Cars.Add(new CarResponseDto(0, "ALL", 0, 0, string.Empty, string.Empty, string.Empty));
 				Cars.AddRange(result.Data);
+				IsSearch = false;
 			}
 		}
 	}

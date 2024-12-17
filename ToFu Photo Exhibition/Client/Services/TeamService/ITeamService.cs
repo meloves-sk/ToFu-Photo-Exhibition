@@ -3,6 +3,7 @@
 	public interface ITeamService
 	{
 		List<TeamResponseDto> Teams { get; }
+		bool IsSearch { get; set; }
 		Task GetFilterTeams(int categoryId, int manufacturerId);
 	}
 }
