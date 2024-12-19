@@ -9,8 +9,10 @@ global using ToFu_Photo_Exhibition.Client.Services.ManufacturerService;
 global using ToFu_Photo_Exhibition.Client.Services.TeamService;
 global using ToFu_Photo_Exhibition.Client.Services.CarService;
 global using ToFu_Photo_Exhibition.Client.Services.PhotoService;
+global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+global using Microsoft.AspNetCore.Components.Forms;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

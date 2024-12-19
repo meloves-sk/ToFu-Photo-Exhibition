@@ -3,7 +3,7 @@
 	public interface IPhotoService
 	{
 		List<PhotoResponseDto> Photos { get; }
-		bool IsSearch { get; set; }
+		bool IsInitializeOrSearch { get; set; }
 		Task GetFilterPhotos(int categoryId, int roundId, int manufacturerId, int teamId, int carId);
 	}
 }

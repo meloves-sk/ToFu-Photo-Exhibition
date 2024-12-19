@@ -5,50 +5,79 @@
 @inject ICarService CarService;
 @inject IPhotoService PhotoService;
 <div class="category-content">
-	@if (RoundService.IsSearch || ManufacturerService.IsSearch || TeamService.IsSearch || CarService.IsSearch || PhotoService.IsSearch)
+	<div class="filter">
+		<div class="box round">
+			<p>Round</p>
+			<Microsoft.AspNetCore.Components.Forms.InputSelect class="form-select" @bind-Value="@roundId" @bind-Value:after="RoundChanged">
+				@if (RoundService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var round in RoundService.Rounds)
+					{
+						<option value="@round.Id">@round.Name</option>
+					}
+				}
+			</Microsoft.AspNetCore.Components.Forms.InputSelect>
+		</div>
+		<div class="box manufacturer">
+			<p>Manufacturer</p>
+			<Microsoft.AspNetCore.Components.Forms.InputSelect class="form-select" @bind-Value="@manufacturerId" @bind-Value:after="ManufacturerChanged">
+				@if (ManufacturerService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var manufacturer in ManufacturerService.Manufacturers)
+					{
+						<option value="@manufacturer.Id">@manufacturer.Name</option>
+					}
+				}
+			</Microsoft.AspNetCore.Components.Forms.InputSelect>
+		</div>
+		<div class="box team">
+			<p>Team</p>
+			<Microsoft.AspNetCore.Components.Forms.InputSelect class="form-select" @bind-Value="@teamId" @bind-Value:after="TeamChanged">
+				@if (TeamService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var team in TeamService.Teams)
+					{
+						<option value="@team.Id">@team.Name</option>
+					}
+				}
+			</Microsoft.AspNetCore.Components.Forms.InputSelect>
+		</div>
+		<div class="box car">
+			<p>Car</p>
+			<Microsoft.AspNetCore.Components.Forms.InputSelect class="form-select" @bind-Value="@carId" @bind-Value:after="CarChanged">
+				@if (CarService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var car in CarService.Cars)
+					{
+						<option value="@car.Id">@car.Name</option>
+					}
+				}
+			</Microsoft.AspNetCore.Components.Forms.InputSelect>
+		</div>
+	</div>
+	@if (PhotoService.IsInitializeOrSearch)
 	{
 		<Loader />
 	}
 	else
 	{
-		<div class="filter">
-			<div class="box round">
-				<p>Round</p>
-				<select class="form-select" value="@roundId" @onchange="(e => RoundChanged(e.Value.ToString()))">
-					@foreach (var round in RoundService.Rounds)
-					{
-						<option value="@round.Id">@round.Name</option>
-					}
-				</select>
-			</div>
-			<div class="box manufacturer">
-				<p>Manufacturer</p>
-				<select class="form-select" value="@manufacturerId" @onchange="(e => ManufacturerChanged(e.Value.ToString()))">
-					@foreach (var manufacturer in ManufacturerService.Manufacturers)
-					{
-						<option value="@manufacturer.Id">@manufacturer.Name</option>
-					}
-				</select>
-			</div>
-			<div class="box team">
-				<p>Team</p>
-				<select class="form-select" value="@teamId" @onchange="(e => TeamChanged(e.Value.ToString()))">
-					@foreach (var team in TeamService.Teams)
-					{
-						<option value="@team.Id">@team.Name</option>
-					}
-				</select>
-			</div>
-			<div class="box car">
-				<p>Car</p>
-				<select class="form-select" value="@carId" @onchange="(e => CarChanged(e.Value.ToString()))">
-					@foreach (var car in CarService.Cars)
-					{
-						<option value="@car.Id">@car.Name</option>
-					}
-				</select>
-			</div>
-		</div>
+
 		<div class="gallery">
 			@foreach (var photo in PhotoService.Photos)
 			{
@@ -56,73 +85,10 @@
 					<div class="photo-header">
 						No.@photo.CarNo @photo.Car
 					</div>
-					<img src="@photo.FilePath" alt="@photo.Car" />
+					<img src="@photo.FilePath" alt="@photo.Car" loading="lazy"/>
 				</div>
 			}
 		</div>
 	}
 </div>
 
-@code {
-	[Parameter]
-	public int Id { get; set; }
-	[Parameter]
-	public string Name { get; set; }
-	private int roundId = 0;
-	private int manufacturerId = 0;
-	private int teamId = 0;
-	private int carId = 0;
-	protected override async Task OnParametersSetAsync()
-	{
-		await RoundService.GetFilterRounds(Id);
-		await ManufacturerService.GetFilterManufacturers(Id);
-		await LoadTeams();
-		await LoadCars();
-		await LoadPhotos();
-	}
-
-	private async Task LoadTeams()
-	{
-		await TeamService.GetFilterTeams(Id, manufacturerId);
-	}
-
-	private async Task LoadCars()
-	{
-		await CarService.GetFilterCars(Id, manufacturerId, teamId);
-	}
-
-	private async Task LoadPhotos()
-	{
-		await PhotoService.GetFilterPhotos(Id, roundId, manufacturerId, teamId, carId);
-	}
-
-	private async Task RoundChanged(string value)
-	{
-		roundId = int.Parse(value);
-		await LoadPhotos();
-	}
-
-	private async Task ManufacturerChanged(string value)
-	{
-		manufacturerId = int.Parse(value);
-		teamId = 0;
-		carId = 0;
-		await LoadTeams();
-		await LoadCars();
-		await LoadPhotos();
-	}
-
-	private async Task TeamChanged(string value)
-	{
-		teamId = int.Parse(value);
-		carId = 0;
-		await LoadCars();
-		await LoadPhotos();
-	}
-
-	private async Task CarChanged(string value)
-	{
-		carId = int.Parse(value);
-		await LoadPhotos();
-	}
-}

@@ -3,7 +3,7 @@
 	public interface ICarService
 	{
 		List<CarResponseDto> Cars { get; }
-		bool IsSearch { get; set; }
+		bool IsInitializeOrSearch { get; set; }
 		Task GetFilterCars(int categoryId, int manufacturerId, int teamId);
 	}
 }

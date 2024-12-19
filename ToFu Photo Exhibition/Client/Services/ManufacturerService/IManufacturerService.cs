@@ -3,7 +3,7 @@
 	public interface IManufacturerService
 	{
 		List<ManufacturerResponseDto> Manufacturers { get; }
-		bool IsSearch { get; set; }
+		bool IsInitializeOrSearch { get; set; }
 		Task GetFilterManufacturers(int categoryId);
 	}
 }
