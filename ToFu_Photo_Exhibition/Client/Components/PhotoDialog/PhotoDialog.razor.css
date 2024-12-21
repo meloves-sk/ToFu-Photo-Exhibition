@@ -68,13 +68,33 @@
     margin: 0 auto;
 }
 
+.card-download {
+    padding: 16px;
+    border-radius: 12px;
+    background-color: yellow;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,.25);
+    color: black;
+    align-content: center;
+    text-align: center;
+    height: 50px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+    .card-download:active {
+        box-shadow: none;
+    }
+
 @media (max-width: 641px) {
     .card-title {
         font-size: 18px;
     }
+
     .card-photo {
-        max-width: 300px;
-        max-height: 300px;
+        max-width: 350px;
+        max-height: 350px;
         margin: 0 auto;
     }
 }

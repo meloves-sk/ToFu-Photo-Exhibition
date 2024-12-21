@@ -6,6 +6,7 @@
 		public int Id { get; set; }
 		[Parameter]
 		public string Name { get; set; } = string.Empty;
+		private bool _isDebug = false;
 		private int roundId;
 		private int manufacturerId;
 		private int teamId;
@@ -13,6 +14,13 @@
 		private PhotoDialog _photoDialog = null!;
 		protected override async Task OnParametersSetAsync()
 		{
+#if DEBUG
+			_isDebug = true;
+#endif
+			roundId = 0;
+			manufacturerId = 0;
+			teamId = 0;
+			carId = 0;
 			await Task.WhenAll(SetRounds(), SetManufacturers());
 			await SetTeams();
 			await SetCars();

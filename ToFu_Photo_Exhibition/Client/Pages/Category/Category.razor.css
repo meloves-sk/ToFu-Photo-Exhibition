@@ -1,8 +1,8 @@
 ﻿.category-content {
     margin: 0;
-    height: 100vh;
+    height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto minmax(0,1fr);
 }
 
 .filter {
@@ -20,8 +20,10 @@
     }
 
 .gallery {
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-flow: row;
     overflow-y: auto;
 }
 

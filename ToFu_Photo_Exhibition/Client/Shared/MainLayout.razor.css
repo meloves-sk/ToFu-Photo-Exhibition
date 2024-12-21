@@ -1,23 +1,26 @@
 ﻿.page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow-y:hidden;
+    display: grid;
+    grid-template-rows: auto minmax(0,1fr);
+    overflow-y: hidden;
+    height: 100vh;
+    gap: 4px;
 }
 
 main {
-    flex: 1;
-    height:100vh;
+    display: grid;
+    grid-template-rows: minmax(0,1fr);
 }
 
 .sidebar {
-    background-color:black;
-
+    background-color: black;
 }
 
 @media (min-width: 641px) {
     .page {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: auto minmax(0,1fr);
+        grid-template-rows: minmax(0,1fr);
+        overflow-y: hidden;
     }
 
     .sidebar {

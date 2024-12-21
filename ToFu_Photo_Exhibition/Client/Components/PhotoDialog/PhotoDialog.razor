@@ -8,7 +8,6 @@
 			}
 			else
 			{
-
 				<div class="card-header">
 					<div class="card-title">No.@_photo?.CarNo @_photo?.Car</div>
 					<button class="btn-icon" @onclick=@CloseButtonOnClick>
@@ -32,8 +31,15 @@
 						<div class="desc-header">Description</div>
 						<div class="dsec-content">@_photo?.Description</div>
 					</div>
-					<img class="card-photo" src="@_photo?.FilePath" alt="@_photo?.Car" loading="lazy" />
-					<a class="btn btn-primary btn-lg card-download" href="@_photo?.FilePath" download>Download</a>
+					@if (_isDebug)
+					{
+						<img class="card-photo" src="https://www.meloves.net/tofu-photo-exhibition/@_photo?.FilePath" alt="@_photo?.Car" loading="lazy" />
+					}
+					else
+					{
+						<img class="card-photo" src="@_photo?.FilePath" alt="@_photo?.Car" loading="lazy" />
+					}
+					<a class="card-download" href="@_photo?.FilePath" download>Download</a>
 				</div>
 			}
 		</div>

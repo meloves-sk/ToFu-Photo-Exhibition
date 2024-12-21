@@ -83,8 +83,15 @@
 			{
 				<ToFu_Photo_Exhibition.Client.Components.Card.Card>
 					<div class="photo-content" @onclick="(() => PhotoClick(photo))">
-						No.@photo.CarNo @photo.Car
-						<img src="@photo.FilePath" alt="@photo.Car" loading="lazy"/>
+						No.@photo.CarNo @photo.Car 
+						@if (_isDebug)
+						{
+							<img src="https://www.meloves.net/tofu-photo-exhibition/@photo.FilePath" alt="@photo.Car" loading="lazy" />
+						}
+						else
+						{
+							<img src="@photo.FilePath" alt="@photo.Car" loading="lazy"/>
+						}
 					</div>
 				</ToFu_Photo_Exhibition.Client.Components.Card.Card>
 			}
