@@ -1,0 +1,67 @@
+﻿section {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+}
+
+.profile-title {
+    font-size: 30px;
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+}
+
+img {
+    max-width: 200px;
+}
+
+.profile-content {
+    color: white;
+    padding: 10px;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.profile-desc {
+    font-size: 15px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    width: 200px;
+    height: 50px;
+    align-content: center;
+    list-style: none;
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.link a {
+    display: flex;
+    text-decoration: none;
+}
+
+svg {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.link-name {
+    margin: 0 auto;
+    align-content: center;
+    color: black;
+    font-weight: bold;
+}

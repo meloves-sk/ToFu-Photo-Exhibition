@@ -1,0 +1,37 @@
+﻿@inject ICategoryService CategoryService
+<div class="top-row navbar navbar-dark">
+	<div class="container-fluid">
+		<a href="">
+			<img src="tofu_photo_exhibition_logo.png" id="img-logo" class="img" />
+		</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+</div>
+@if (!CategoryService.IsInitializeOrSearch)
+{
+	<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+		<nav class="flex-column">
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+					Home
+				</NavLink>
+			</div>
+			@foreach (var category in CategoryService.Categories)
+			{
+				var url = $"category/{category.Id}/{category.Name.Replace(@" ", "")}";
+				<div class="nav-item px-3">
+					<NavLink class="nav-link" href="@url">
+						@category.Name
+					</NavLink>
+				</div>
+			}
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="about">
+					About ToFu
+				</NavLink>
+			</div>
+		</nav>
+	</div>
+}

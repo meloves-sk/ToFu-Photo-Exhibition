@@ -1,0 +1,47 @@
+﻿@if (_show)
+{
+	<div class="card-wrapper">
+		<div class="card-container">
+			@if (_photo == null)
+			{
+				<Loader />
+			}
+			else
+			{
+				<div class="card-header">
+					<div class="card-title">No.@_photo?.CarNo @_photo?.Car</div>
+					<button class="btn-icon" @onclick=@CloseButtonOnClick>
+						<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M8.53336 24.4107L7.58936 23.4667L15.056 16L7.58936 8.53333L8.53336 7.58932L16 15.056L23.4667 7.58932L24.4107 8.53333L16.944 16L24.4107 23.4667L23.4667 24.4107L16 16.944L8.53336 24.4107Z" fill="#111111" />
+						</svg>
+					</button>
+				</div>
+				<div class="card-body">
+					<div class="description">
+						<div class="desc-header">Category</div>
+						<div class="dsec-content">@_photo?.Category</div>
+						<div class="desc-header">Round</div>
+						<div class="dsec-content">@_photo?.Round</div>
+						<div class="desc-header">Manufacturer</div>
+						<div class="dsec-content">@_photo?.Manufacturer</div>
+						<div class="desc-header">Team</div>
+						<div class="dsec-content">@_photo?.Team</div>
+						<div class="desc-header">Car</div>
+						<div class="dsec-content">@_photo?.Car</div>
+						<div class="desc-header">Description</div>
+						<div class="dsec-content">@_photo?.Description</div>
+					</div>
+					@if (_isDebug)
+					{
+						<img class="card-photo" src="https://www.meloves.net/tofu-photo-exhibition/@_photo?.FilePath" alt="@_photo?.Car" />
+					}
+					else
+					{
+						<img class="card-photo" src="@_photo?.FilePath" alt="@_photo?.Car" loading="lazy" />
+					}
+					<a class="card-download" href="@_photo?.FilePath" download>Download</a>
+				</div>
+			}
+		</div>
+	</div>
+}

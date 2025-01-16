@@ -1,0 +1,101 @@
+﻿@page "/category/{id:int}/{name}"
+@inject IRoundService RoundService;
+@inject IManufacturerService ManufacturerService;
+@inject ITeamService TeamService;
+@inject ICarService CarService;
+@inject IPhotoService PhotoService;
+<div class="category-content">
+	<div class="filter">
+		<div class="box round">
+			<p>Round</p>
+			<select class="form-select" @bind="@_roundId" @bind:after="RoundChanged">
+				@if (RoundService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var round in RoundService.Rounds)
+					{
+						<option value="@round.Id">@round.Name</option>
+					}
+				}
+			</select>
+		</div>
+		<div class="box manufacturer">
+			<p>Manufacturer</p>
+			<select class="form-select" @bind="@_manufacturerId" @bind:after="ManufacturerChanged">
+				@if (ManufacturerService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var manufacturer in ManufacturerService.Manufacturers)
+					{
+						<option value="@manufacturer.Id">@manufacturer.Name</option>
+					}
+				}
+			</select>
+		</div>
+		<div class="box team">
+			<p>Team</p>
+			<select class="form-select" @bind="@_teamId" @bind:after="TeamChanged">
+				@if (TeamService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var team in TeamService.Teams)
+					{
+						<option value="@team.Id">@team.Name</option>
+					}
+				}
+			</select>
+		</div>
+		<div class="box car">
+			<p>Car</p>
+			<select class="form-select" @bind="@_carId" @bind:after="CarChanged">
+				@if (CarService.IsInitializeOrSearch)
+				{
+					<option value="0">Loading...</option>
+				}
+				else
+				{
+					@foreach (var car in CarService.Cars)
+					{
+						<option value="@car.Id">@car.Name</option>
+					}
+				}
+			</select>
+		</div>
+	</div>
+	@if (PhotoService.IsInitializeOrSearch)
+	{
+		<Loader />
+	}
+	else
+	{
+		<div class="gallery">
+			@foreach (var photo in PhotoService.Photos)
+			{
+				<div class="photo-content" @onclick="(() => PhotoClick(photo))">
+					<Card>
+						<div class="photo-name">No.@photo.CarNo @photo.Car</div>
+						@if (_isDebug)
+						{
+							<img src="https://www.meloves.net/tofu-photo-exhibition/@photo.FilePath" alt="@photo.Car"/>
+						}
+						else
+						{
+							<img src="@photo.FilePath" alt="@photo.Car" loading="lazy" />
+						}
+					</Card>
+				</div>
+			}
+		</div>
+	}
+	<PhotoDialog @ref="@_photoDialog" />
+</div>
+
