@@ -1,14 +1,15 @@
-﻿namespace ToFu_Photo_Exhibition.Server.Models;
-
-public partial class Round
+﻿namespace ToFu_Photo_Exhibition.Server.Models
 {
-    public int Id { get; set; }
+	public partial class Round
+	{
+		public int Id { get; set; }
 
-    public int CategoryId { get; set; }
+		public int CategoryId { get; set; }
 
-    public string Name { get; set; } = null!;
+		public string Name { get; set; } = null!;
 
-    public virtual Category Category { get; set; } = null!;
+		public virtual Category Category { get; set; } = null!;
 
-    public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
+		public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
+	}
 }
