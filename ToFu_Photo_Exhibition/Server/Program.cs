@@ -42,4 +42,4 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
-app.Run();
+app.Run("http://0.0.0.0:5002");
