@@ -45,7 +45,7 @@
 				_db.Photos.Add(photo);
 			}
 			await _db.SaveChangesAsync();
-			await File.WriteAllBytesAsync($"wwwroot/Images/{filename}", photoRequestDto.PhotoData);
+			await File.WriteAllBytesAsync($"wwwroot/images/{filename}", photoRequestDto.PhotoData);
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 		public async Task<ServiceResponse<bool>> DeletePhoto(int photoId)

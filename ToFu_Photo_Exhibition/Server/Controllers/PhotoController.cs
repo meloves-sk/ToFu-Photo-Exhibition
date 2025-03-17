@@ -44,6 +44,5 @@
 		{
 			return Ok(await _photoService.DeletePhoto(photoId));
 		}
-
 	}
 }
