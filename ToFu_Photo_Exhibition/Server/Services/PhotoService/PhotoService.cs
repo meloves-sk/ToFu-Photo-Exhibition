@@ -35,17 +35,17 @@
 		public async Task<ServiceResponse<bool>> SavePhoto(PhotoRequestDto photoRequestDto)
 		{
 			var photo = await _db.Photos.FindAsync(photoRequestDto.Id) ?? new Photo();
-			string filename = $"image{DateTime.Now.ToString("yyyyMMddHHmmss")}{Path.GetRandomFileName()}.png";
-			photo.FilePath = $"images/{filename}";
 			photo.Description = photoRequestDto.Description;
 			photo.RoundId = photoRequestDto.RoundId;
 			photo.CarId = photoRequestDto.CarId;
 			if (photo.Id == 0)
 			{
+				string filename = $"image{DateTime.Now.ToString("yyyyMMddHHmmss")}{Path.GetRandomFileName()}.png";
+				photo.FilePath = $"images/{filename}";
+				await File.WriteAllBytesAsync($"wwwroot/images/{filename}", photoRequestDto.PhotoData!);
 				_db.Photos.Add(photo);
 			}
 			await _db.SaveChangesAsync();
-			await File.WriteAllBytesAsync($"wwwroot/images/{filename}", photoRequestDto.PhotoData);
 			return new ServiceResponse<bool>(true, true, "正常に保存されました");
 		}
 		public async Task<ServiceResponse<bool>> DeletePhoto(int photoId)

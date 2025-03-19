@@ -2,7 +2,7 @@
 {
 	public class PhotoRequestDto
 	{
-		public PhotoRequestDto(int id, string description, int roundId, int carId, byte[] photoData)
+		public PhotoRequestDto(int id, string description, int roundId, int carId, byte[]? photoData)
 		{
 			Id = id;
 			Description = description;
@@ -14,6 +14,6 @@
 		public string Description { get; }
 		public int RoundId { get; set; }
 		public int CarId { get; set; }
-		public byte[] PhotoData { get; }
+		public byte[]? PhotoData { get; }
 	}
 }
