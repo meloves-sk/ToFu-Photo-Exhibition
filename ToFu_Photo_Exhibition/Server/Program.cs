@@ -10,6 +10,9 @@ global using ToFu_Photo_Exhibition.Server.Services.PhotoService;
 global using ToFu_Photo_Exhibition.Server.Services.RoundService;
 global using ToFu_Photo_Exhibition.Server.Services.TeamInformationService;
 global using ToFu_Photo_Exhibition.Server.Services.TeamService;
+global using SixLabors.ImageSharp;
+global using SixLabors.ImageSharp.Formats.Png;
+global using SixLabors.ImageSharp.Processing;
 
 var builder = WebApplication.CreateBuilder(args);
 

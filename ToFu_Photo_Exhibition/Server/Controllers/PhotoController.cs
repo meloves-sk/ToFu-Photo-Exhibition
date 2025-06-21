@@ -2,7 +2,7 @@
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[RequestSizeLimit(52428800)]
+	[RequestSizeLimit(104857600)]
 	public class PhotoController : ControllerBase
 	{
 		private readonly IPhotoService _photoService;

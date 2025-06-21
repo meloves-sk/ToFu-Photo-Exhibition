@@ -40,7 +40,7 @@
 			photo.CarId = photoRequestDto.CarId;
 			if (photo.Id == 0)
 			{
-				string filename = $"image{DateTime.Now.ToString("yyyyMMddHHmmss")}{Path.GetRandomFileName()}.png";
+				string filename = $"image{DateTime.Now.ToString("yyyyMMddHHmmss")}{Path.GetRandomFileName()}.jpg";
 				photo.FilePath = $"images/{filename}";
 				await File.WriteAllBytesAsync($"wwwroot/images/{filename}", photoRequestDto.PhotoData!);
 				_db.Photos.Add(photo);
